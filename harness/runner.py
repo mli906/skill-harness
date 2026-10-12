@@ -53,6 +53,7 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     learn_tasks, probe_tasks = _split_probe(ctx.benchmark, train, cfg.seed)
     learn_traces = _eval(agent, rep, k, learn_tasks, empty)
     probe_traces = _eval(agent, rep, k, probe_tasks, empty)
+    logger.log("split", learn_tasks=learn_tasks, probe_tasks=probe_tasks, test_tasks=test)
     logger.log("train.traces", n_learn=len(learn_traces), n_probe=len(probe_traces),
                learn_pass=sum(t.outcome for t in learn_traces), probe_pass=sum(t.outcome for t in probe_traces))
     # 2. learner.induce(traces) -> candidates
@@ -69,8 +70,12 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
         logger.log("eval.task", task_id=t_lib.task_id, with_lib=t_lib.outcome, baseline=t_base.outcome,
                    output=t_lib.final_output, failure_mode=t_lib.failure_mode, steps=len(t_lib.steps))
     # 6. assemble Scorecard
-    train_ids = {task_id(t) for t in train}
-    audited = [s for s in lib.skills if s.provenance and all(p in train_ids for p in s.provenance)]
+    # Auditable = non-empty provenance, every id is a train trace the learner actually
+    # saw, and none leak from the held-out probe or the test set.
+    learner_ids = {t.task_id for t in learn_traces}
+    heldout_ids = {task_id(t) for t in probe_tasks + test}
+    audited = [s for s in lib.skills if s.provenance
+               and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),
