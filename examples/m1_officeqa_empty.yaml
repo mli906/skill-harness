@@ -1,0 +1,8 @@
+learner: trivial
+gate: noop
+representation: skill_md
+benchmark: officeqa
+base_model: gpt-4o-mini
+seed: 0
+retrieval_k: 0   # empty library injected: validates benchmark + agent alone
+log_path: logs/m1_officeqa_empty.jsonl

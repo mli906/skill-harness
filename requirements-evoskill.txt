@@ -1,0 +1,3 @@
+evoskill @ git+https://github.com/sentient-agi/EvoSkill@36f6f04952293d7054145550c2b9f0b0411bff1c
+datasets>=4
+huggingface_hub>=0.24

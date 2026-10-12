@@ -49,8 +49,8 @@ def test_gate_difference_over_seed_sweep(tmp_path):
 
 
 def test_registry_only_milestone_plugins():
-    assert registry.available("learner") == ["trivial"]
+    assert registry.available("learner") == ["evoskill", "trivial"]  # M1 adds evoskill
     assert registry.available("gate") == ["non_regression", "noop"]
-    assert registry.available("benchmark") == ["synthetic"]
+    assert registry.available("benchmark") == ["officeqa", "synthetic"]  # M1 adds officeqa
     assert registry.available("representation") == ["skill_md"]
     assert registry.available("agent") == ["react"]
