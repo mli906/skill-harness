@@ -1,0 +1,8 @@
+learner: trivial
+gate: noop
+representation: skill_md
+benchmark: synthetic
+base_model: stub        # set to an OpenAI model name (e.g. gpt-4o-mini) + OPENAI_API_KEY for real runs
+seed: 0
+retrieval_k: 3
+log_path: logs/m0.jsonl
