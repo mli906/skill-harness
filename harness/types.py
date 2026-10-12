@@ -53,7 +53,7 @@ class Scorecard:
     avg_steps: float
     tokens_eval: int
     tokens_build: int        # cost to produce the library
-    flips_w2c: int           # regression: wrong→correct
+    flips_w2c: int           # improvement: wrong→correct
     flips_c2w: int           # regression: correct→wrong
     library_size: int
     auditability: float      # lineage completeness

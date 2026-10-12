@@ -57,6 +57,6 @@ Each plugin class is decorated `@register("<kind>", "<name>")` and either has a 
 * Scorecard: `auditability` = fraction of library skills whose provenance is non-empty and all real train ids (1.0 for an empty library); `unauthorized_actions` = tool calls outside `{calculator, finish}` in the with-library eval; flips compare with-library vs empty-library eval on the same tasks and seed.
 
 ## Notes from the audit
-* `types.py` labels **both** flip fields "regression" (verbatim from spec). In practice `flips_w2c` (wrong→correct) is an *improvement* and `flips_c2w` (correct→wrong) is the regression. The verbatim comments are left unchanged.
+* `types.py` flip comments corrected (user-approved): `flips_w2c` = improvement (wrong→correct), `flips_c2w` = regression (correct→wrong).
 * Flips are a paired, per-task comparison on the identical `test_tasks()` list: the with-library and empty-library evals both run live under the same seed. `eval.task` log lines record both outcomes.
 * `split` log event records learn / probe / test task lists (pairwise disjoint; enforced by `tests/test_audit.py`).
