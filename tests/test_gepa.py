@@ -9,6 +9,7 @@ from harness.types import Step, Trace, SkillLibrary
 TRAIN = [f"ALFWorld game {i}\nYour task is to: put a pen in shelf." for i in range(3)]
 VAL = [f"ALFWorld game v{i}\nYour task is to: put a mug in desk." for i in range(3)]
 TEST = ["ALFWorld game TEST\nYour task is to: heat a mug."]
+PROBE = "ALFWorld game PROBE\nYour task is to: cool a pan."
 
 
 class StubLM:
@@ -54,14 +55,28 @@ def test_adapter_scores_match_verify():
 
 def test_induce_one_skill_valset_provenance_and_tokens():
     lm, ag = StubLM(), ScriptedAgent()
-    L = GEPALearner(lm, ag, None, Bench(), seed=0, train_tasks=TRAIN, val_tasks=VAL, max_metric_calls=12)
+    L = GEPALearner(lm, ag, None, Bench(), seed=0, max_metric_calls=12)
+    L.bind_split(train=TRAIN, valset=VAL, forbidden_ids={task_id(PROBE)})
     out = L.induce([], SkillLibrary(skills=[]))
     assert len(out) == 1
     sk = out[0]
     assert sk.representation == "skill_md" and sk.version == 1
     assert sk.provenance == sorted(task_id(t) for t in VAL)
-    assert TEST[0] not in ag.seen                       # never touches the test set
+    assert TEST[0] not in ag.seen and PROBE not in ag.seen                      # never touches the test set
     assert lm.prompts, "reflection LM was called"
     assert "improved_skill" in sk.content and sk.content != SEED_SKILL
     assert L.last_build_tokens > 0
     assert L.last_build_tokens == 230 * len(lm.prompts) + 7 * len(ag.seen)
+
+
+def test_unbound_or_probe_touching_learner_raises():
+    import pytest
+    from harness.splits import ProbeLeakError
+    L = GEPALearner(StubLM(), ScriptedAgent(), None, Bench(), seed=0, max_metric_calls=12)
+    with pytest.raises(ProbeLeakError):
+        L.induce([], SkillLibrary(skills=[]))                         # no pinned split bound
+    with pytest.raises(ProbeLeakError):
+        L.bind_split(train=TRAIN, valset=VAL + [PROBE], forbidden_ids={task_id(PROBE)})
+    ad = HarnessGEPAAdapter(ScriptedAgent(), None, Bench(), 1, {task_id(PROBE)})
+    with pytest.raises(ProbeLeakError):
+        ad.evaluate([{"id": task_id(PROBE), "text": PROBE}], {"skill_md": "x"})

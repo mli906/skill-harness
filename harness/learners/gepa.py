@@ -17,19 +17,24 @@ Wrapping notes (verified against installed gepa==0.1.4 source):
     failure summary).
 Build tokens = reflection-LM tokens + consuming-agent tokens (Trace.tokens) of every rollout
 GEPA triggers, so all model calls made during induction are counted once.
-trainset = learn split, valset = probe split (runner._split_probe, same seed); the test set is
-never handed to GEPA. NOTE: the probe split is also what the gates use -> GEPA optimises on
-the gate's probe (leakage into gate decisions); flagged, not fixed, per spec.
+Split (harness/splits.py): the runner calls bind_split(train=learn_corpus, valset=gepa_valset,
+forbidden_ids=gate_probe ids) with its pinned split. trainset = learn_corpus (reflection
+minibatches), valset = gepa_valset (candidate scoring / Pareto). gate_probe and test are never
+handed to GEPA; the adapter hard-errors (ProbeLeakError) if asked to run a gate_probe task.
+Skill provenance = gepa_valset ids (training-side), so runner auditability reads them as legit.
+Budget: max_metric_calls default 200 (~8 full passes over a 24-task valset incl. minibatches;
+env GEPA_MAX_METRIC_CALLS or constructor arg).
 """
 from __future__ import annotations
 from typing import Any
 from harness.interfaces.learner import Learner, C2_SELF_COLLECT
 from harness.registry import register
 from harness.seeding import derive_seed, task_id
+from harness.splits import ProbeLeakError, guard_tasks
 from harness.types import Trace, Skill, SkillLibrary
 
 COMPONENT = "skill_md"
-DEFAULT_MAX_METRIC_CALLS = 50
+DEFAULT_MAX_METRIC_CALLS = 200
 OBS_CHARS = 120
 MAX_STEPS_SHOWN = 30
 
@@ -71,8 +76,9 @@ class HarnessGEPAAdapter:
     """GEPAAdapter: DataInst = {"id", "text"} ALFWorld task; candidate = {"skill_md": ...}."""
     # gepa 0.1.4 reads adapter.propose_new_texts unguarded; None -> use the default proposer.
     propose_new_texts = None
-    def __init__(self, agent, representation, benchmark, k: int):
+    def __init__(self, agent, representation, benchmark, k: int, forbidden_ids: set[str] = frozenset()):
         self.agent, self.rep, self.bench, self.k = agent, representation, benchmark, k
+        self.forbidden_ids = set(forbidden_ids)
         self.agent_tokens = 0
         self.rollouts = 0
 
@@ -80,6 +86,7 @@ class HarnessGEPAAdapter:
         from gepa import EvaluationBatch  # lazy: registry auto-imports learners
         lib = SkillLibrary(skills=[Skill(id="gepa_candidate", content=candidate[COMPONENT],
                                          representation="skill_md", provenance=[], version=0)])
+        guard_tasks(batch, self.forbidden_ids, "GEPA adapter")  # hard error on gate_probe
         outputs, scores, trajs = [], [], []
         for inst in batch:
             tr = self.agent.run_task(inst["text"], lib, self.rep, self.k)
@@ -107,6 +114,7 @@ class HarnessGEPAAdapter:
 @register("learner", "gepa")
 class GEPALearner(Learner):
     contract = C2_SELF_COLLECT
+    uses_valset = True   # opt in to the runner's gepa_valset slice
 
     def __init__(self, llm, agent, representation, benchmark, seed: int, k: int = 1,
                  train_tasks: list[str] | None = None, val_tasks: list[str] | None = None,
@@ -114,6 +122,7 @@ class GEPALearner(Learner):
         self.llm, self.agent, self.rep, self.bench = llm, agent, representation, benchmark
         self.seed, self.k, self.logger = seed, k, logger
         self.train_tasks, self.val_tasks = train_tasks, val_tasks
+        self.forbidden_ids: set[str] = set()
         self.max_metric_calls = max_metric_calls
         self.last_build_tokens = 0
         self.last_result = None
@@ -121,18 +130,31 @@ class GEPALearner(Learner):
     @classmethod
     def from_context(cls, ctx):
         import os
-        from harness.runner import _split_probe
-        learn, probe = _split_probe(ctx.benchmark, ctx.benchmark.train_tasks(), ctx.cfg.seed)
         budget = int(os.environ.get("GEPA_MAX_METRIC_CALLS", DEFAULT_MAX_METRIC_CALLS))
+        # Split is NOT rebuilt here: the runner threads its pinned split in via bind_split().
         return cls(ctx.llm, ctx.agent, ctx.representation, ctx.benchmark, ctx.cfg.seed,
-                   ctx.cfg.retrieval_k, learn, probe, budget, ctx.logger)
+                   ctx.cfg.retrieval_k, None, None, budget, ctx.logger)
+
+    def bind_split(self, train: list[str], valset: list[str], forbidden_ids: set[str]) -> None:
+        self.train_tasks, self.val_tasks, self.forbidden_ids = list(train), list(valset), set(forbidden_ids)
+        self._check()
+
+    @property
+    def internal_valset(self) -> list[str]:
+        return list(self.val_tasks or [])
+
+    def _check(self) -> None:
+        if not self.train_tasks or not self.val_tasks:
+            raise ProbeLeakError("GEPA needs the runner's pinned split (bind_split) with a non-empty gepa_valset")
+        guard_tasks(self.train_tasks + self.val_tasks, self.forbidden_ids, "GEPA learner")
 
     def induce(self, traces: list[Trace], current: SkillLibrary) -> list[Skill]:
         import gepa  # lazy: registry auto-imports learners
         # C2: `traces` are ignored for collection; GEPA runs its own rollouts.
+        self._check()
         mk = lambda ts: [{"id": task_id(t), "text": t} for t in ts]
         trainset, valset = mk(self.train_tasks), mk(self.val_tasks)
-        adapter = HarnessGEPAAdapter(self.agent, self.rep, self.bench, self.k)
+        adapter = HarnessGEPAAdapter(self.agent, self.rep, self.bench, self.k, self.forbidden_ids)
         rlm = _CountingReflectionLM(self.llm, self.seed)
         res = gepa.optimize(seed_candidate={COMPONENT: SEED_SKILL}, trainset=trainset, valset=valset,
                             adapter=adapter, reflection_lm=rlm, candidate_selection_strategy="pareto",
