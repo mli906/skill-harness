@@ -1,0 +1,241 @@
+{
+ "steps_per_episode": 22.0,
+ "rows": [
+  {
+   "track": "corpus",
+   "cell": "Q corpus (24x2)",
+   "model": "Q",
+   "eps": 48,
+   "usd_openrouter": 0.294,
+   "note": ""
+  },
+  {
+   "track": "corpus",
+   "cell": "M corpus (24x2)",
+   "model": "M",
+   "eps": 48,
+   "usd_openrouter": 0.141,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "shared probe-empty + baseline",
+   "model": "Q",
+   "eps": 144,
+   "usd_openrouter": 0.883,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "trace2skill x noop",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.538,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "trace2skill x non_regression",
+   "model": "Q",
+   "eps": 144,
+   "usd_openrouter": 1.076,
+   "note": "1 candidates x 24 probe replays"
+  },
+  {
+   "track": "A",
+   "cell": "trace2skill x bayesian",
+   "model": "Q",
+   "eps": 144,
+   "usd_openrouter": 1.076,
+   "note": "assumes no cache overlap with NR"
+  },
+  {
+   "track": "A",
+   "cell": "frozen_evoskill x noop",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.538,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "frozen_evoskill x non_regression",
+   "model": "Q",
+   "eps": 144,
+   "usd_openrouter": 1.076,
+   "note": "1 candidates x 24 probe replays"
+  },
+  {
+   "track": "A",
+   "cell": "frozen_evoskill x bayesian",
+   "model": "Q",
+   "eps": 144,
+   "usd_openrouter": 1.076,
+   "note": "assumes no cache overlap with NR"
+  },
+  {
+   "track": "A",
+   "cell": "awm x noop",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.538,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "awm x non_regression",
+   "model": "Q",
+   "eps": 288,
+   "usd_openrouter": 2.152,
+   "note": "3 candidates x 24 probe replays"
+  },
+  {
+   "track": "A",
+   "cell": "awm x bayesian",
+   "model": "Q",
+   "eps": 288,
+   "usd_openrouter": 2.152,
+   "note": "assumes no cache overlap with NR"
+  },
+  {
+   "track": "A",
+   "cell": "raw_trace_rag x noop",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 1.06,
+   "note": ""
+  },
+  {
+   "track": "A",
+   "cell": "raw_trace_rag x non_regression",
+   "model": "Q",
+   "eps": 3528,
+   "usd_openrouter": 51.925,
+   "note": "48 candidates x 24 probe replays"
+  },
+  {
+   "track": "A",
+   "cell": "raw_trace_rag x bayesian",
+   "model": "Q",
+   "eps": 3528,
+   "usd_openrouter": 51.925,
+   "note": "assumes no cache overlap with NR"
+  },
+  {
+   "track": "A",
+   "cell": "awm builds (1 call/seed, consumer model)",
+   "model": "Q",
+   "eps": 0.30000000000000004,
+   "usd_openrouter": 0.002,
+   "note": ""
+  },
+  {
+   "track": "T",
+   "cell": "M-corpus -> Q",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.538,
+   "note": ""
+  },
+  {
+   "track": "T",
+   "cell": "Q-corpus -> M, M-corpus -> M",
+   "model": "M",
+   "eps": 144,
+   "usd_openrouter": 0.502,
+   "note": ""
+  },
+  {
+   "track": "T",
+   "cell": "M no-skill baseline",
+   "model": "M",
+   "eps": 72,
+   "usd_openrouter": 0.211,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "Q practice prefilter (48 x1)",
+   "model": "Q",
+   "eps": 48,
+   "usd_openrouter": 0.294,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "Q practice rollouts",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.442,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "Q evoskill x noop",
+   "model": "Q",
+   "eps": 72,
+   "usd_openrouter": 0.538,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "Q evoskill x NR+bayes",
+   "model": "Q",
+   "eps": 432,
+   "usd_openrouter": 3.228,
+   "note": "2 skills assumed"
+  },
+  {
+   "track": "B",
+   "cell": "M practice prefilter (48 x1)",
+   "model": "M",
+   "eps": 48,
+   "usd_openrouter": 0.141,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "M practice rollouts",
+   "model": "M",
+   "eps": 72,
+   "usd_openrouter": 0.211,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "M probe-empty",
+   "model": "M",
+   "eps": 72,
+   "usd_openrouter": 0.211,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "M evoskill x noop",
+   "model": "M",
+   "eps": 72,
+   "usd_openrouter": 0.251,
+   "note": ""
+  },
+  {
+   "track": "B",
+   "cell": "M evoskill x NR+bayes",
+   "model": "M",
+   "eps": 432,
+   "usd_openrouter": 1.505,
+   "note": "2 skills assumed"
+  }
+ ],
+ "openrouter_by_track": {
+  "corpus": 0.43,
+  "A": 116.02,
+  "T": 1.25,
+  "B": 6.81
+ },
+ "openrouter_total": 124.51,
+ "openai_builds": {
+  "trace2skill builds (2 corpora x 3 seeds, ~80k tok gpt-4o)": 1.44,
+  "evoskill builds (2 models x 3 seeds, ~$0.05)": 0.3
+ },
+ "openrouter_total_excl_rag_gating": 20.66
+}
