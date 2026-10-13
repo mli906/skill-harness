@@ -164,6 +164,14 @@ class AgentDojoBankingAdapter(Benchmark):
     def injection_task_id(self, task: str) -> str | None:
         return self._meta[task]["injection_task"]
 
+    def attack_variant(self, task: str) -> str:
+        """The ATTACK-condition version of a (clean) task: same user task, paired with the seeded
+        injection task(s) the attack condition would draw (first one), placed by AgentDojo's
+        default placement. Registers it so env_reset/security work. Used by the governance gate
+        to replay the probe under attack; does not change train/test splits."""
+        uid = self._meta[task]["user_task"]
+        return self._task(uid, self._injections_for(uid)[0])
+
     def tool_specs(self) -> list[dict]:
         return tool_specs(self.suite)
 
