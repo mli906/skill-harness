@@ -55,4 +55,8 @@ def make_client(base_model: str) -> LLMClient:
     if base_model == "stub" or base_model.startswith("stub:"):
         from .stub import StubClient
         return StubClient(base_model)
+    from .openrouter import make_provider_client  # opt-in: openrouter/<id> or LLM_BASE_URL
+    pc = make_provider_client(base_model)
+    if pc is not None:
+        return pc
     return OpenAICompatibleClient(base_model)
