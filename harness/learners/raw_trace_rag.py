@@ -2,7 +2,7 @@
 Stores each raw training trace as one library item (provenance = its task_id),
 no LLM call (last_build_tokens = 0). Pair with `representation: raw_trace`."""
 from __future__ import annotations
-from harness.interfaces.learner import Learner
+from harness.interfaces.learner import Learner, C1_FIXED_TRACES
 from harness.registry import register
 from harness.types import Trace, Skill, SkillLibrary
 
@@ -20,6 +20,7 @@ def render_trace(task: str, t: Trace) -> str:
 
 @register("learner", "raw_trace_rag")
 class RawTraceRAGBaseline(Learner):
+    contract = C1_FIXED_TRACES
     def __init__(self, task_lookup: dict):
         self.task_lookup = task_lookup
         self.last_build_tokens = 0
@@ -30,5 +31,11 @@ class RawTraceRAGBaseline(Learner):
 
     def induce(self, traces: list[Trace], current: SkillLibrary) -> list[Skill]:
         v = 1 + max((s.version for s in current.skills), default=0)
-        return [Skill(id=f"trace_{t.task_id}", content=render_trace(self.task_lookup.get(t.task_id, ""), t),
-                      representation="raw_trace", provenance=[t.task_id], version=v) for t in traces]
+        seen: dict[str, int] = {}
+        out = []
+        for t in traces:   # several rollouts of one task (frozen corpus, k>1) get unique ids
+            n = seen.get(t.task_id, 0); seen[t.task_id] = n + 1
+            sid = f"trace_{t.task_id}" + (f"_r{n}" if n else "")
+            out.append(Skill(id=sid, content=render_trace(self.task_lookup.get(t.task_id, ""), t),
+                             representation="raw_trace", provenance=[t.task_id], version=v))
+        return out

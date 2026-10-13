@@ -189,3 +189,43 @@ Design notes and deviations:
 - EvoSkill cannot drive the env interactively. Each row it gets is the task plus our agent's previous trajectory. Its agent outputs an open-loop command plan, and a script scorer (`harness.benchmarks.alfworld_score`) replays that plan in the real env (won → 1.0).
 - `evoskill_compat` now also makes OpenHands `file_editor` create parent directories. Without it, the skill builder left an empty `.claude/skills/<name>` file (0-content skill; attempt 1 had library_size 0).
 - Only 2 task categories are used, to keep the sample minimal.
+
+## C1 track: frozen trace corpus + Trace2Skill (M4)
+
+**Part A, the frozen corpus** (`harness/corpus.py`, stored in `corpora/alfworld_c1/`):
+- Reference agent: the evaluation consumer (`ReActMultiStepAgent`), with gpt-4o-mini pinned, fixed temperature 0.7 (`harness/llm/sampling.py`), and k=2 rollouts per task with seed `derive_seed(0,"corpus-rollout",r)`.
+- Tasks: the learner share of the ALFWorld **train** split (`benchmark: alfworld_c1`, 2 task types, 4 tasks). The gate's probe tasks are other train-split games. Test tasks are valid_seen, the same 6 as M3.
+- Each record holds the full steps, the artifacts (final output, action list, final observation), the env outcome label, gold info (the expert walkthrough, goal and task type, which the agent never sees) and tokens.
+- Manifest: 8 traces, success:failure 6:2, 101,041 tokens, plus a sha256.
+- `--regenerate` rebuilds the corpus. `--load` (the default) only reads and validates it: count = tasks×k, k per task, ratio, sha256, train-only, and no probe or test leakage. Every check passes.
+
+**Part B, the learner contract** (`harness/interfaces/learner.py`):
+- New `contract` attribute: `C1_fixed_traces` or `C2_self_collect` (the default).
+- trace2skill, raw_trace_rag and noskill are C1. EvoSkill keeps the C2 default; `evoskill.py` is unchanged for this. The M0 `trivial` learner is left untouched, so it also has the C2 default.
+- `harness/c1_runner.py` runs C1 learners inside `env_guard.forbid_env`. The benchmark's env methods then raise, and `HARNESS_ENV_FORBIDDEN=1` makes `alfworld.make_env` refuse inside subprocesses as well. Covered by `tests/test_c1.py`.
+
+**Part C, Trace2SkillLearner** (`harness/learners/trace2skill.py`):
+- Pinned at Qwen-Applications/Trace2Skill `3d0b52a140f002a512930252b613c49048f7d5ac`, cloned to `~/.cache`. Not forked and not edited.
+- Each corpus trace becomes one native `<prefix>_<id>_<SUCCEED|FAILED>.md` agent log (task, steps, artifacts, outcome, and a labelled gold section).
+- Its pipeline then runs unchanged: LLM error analyst, LLM success analyst, the two parsers, and `skill_evolver.run_parallel_combined_skill_evolution` (parallel patch proposal plus hierarchical merge). The run starts from a weak initial SKILL.md ("creation from scratch"). Model: gpt-4o.
+- The output becomes one Skill: representation `skill_md`, provenance = the corpus task_ids.
+- Runtime shim `trace2skill_compat`: it puts Trace2Skill's namespace package `src` on the path (EvoSkill installs a regular `src` package that would shadow it) and sums OpenAI token usage. Nothing else.
+- The evolver needs `skills/skill-creator/scripts/quick_validate.py` relative to its working directory, which is not in its repo. We provide it from anthropics/skills, pinned at `dbd4588f9e1033efb41dad4bef2f7947c8993d44`.
+- `scripts/validate_trace2skill.py` runs Trace2Skill standalone (its own CLIs in a clean venv, no harness) on the same logs. Its output is structurally equivalent to the wrapped run: same files (SKILL.md), same frontmatter (name, description), quick_validate passes on both, and the same parsed record counts (4 error and 12 success).
+
+**Other changes:**
+- No-skill now uses `learner: noskill` (NullLearner), so library_size is 0. M3's 1 was an artifact: trivial built a skill that k=0 never injected.
+- Raw-RAG gives unique ids per rollout (`_r1`).
+
+**Results** (`python -m harness.c1_run --config examples/c1_alfworld_<x>.yaml`; seed 0, k_retrieval 3, 6 test tasks):
+
+| config | success | avg_steps | tokens_eval | tokens_build (learner + gate) | w2c | c2w | lib | audit | unauth | rej |
+|---|---|---|---|---|---|---|---|---|---|---|
+| no-skill | 0.50 | 21.0 | 89,416 | 0 | 0 | 0 | 0 | 1.0 | 10 | 0 |
+| raw-trace RAG | 0.667 | 16.0 | 213,702 | 0 | 1 | 0 | 8 | 1.0 | 6 | 0 |
+| Trace2Skill + NoOp | 0.667 | 19.7 | 154,026 | 80,626 | 1 | 0 | 1 | 1.0 | 9 | 0 |
+| Trace2Skill + NonReg | 0.667 | 19.7 | 154,026 | 211,919 (80,626 + 131,293) | 1 | 0 | 1 | 1.0 | 9 | 0 |
+| EvoSkill + NoOp | 0.50 | 18.5 | 98,397 | 61,193 (lower bound) | 0 | 0 | 1 | 1.0 | 18 | 0 |
+| EvoSkill + NonReg | 0.50 | 18.5 | 98,397 | 165,383 (61,193 lower bound + 104,190) | 0 | 0 | 1 | 1.0 | 18 | 0 |
+
+EvoSkill's build tokens are a **lower bound**: only tokens visible in its run cache are counted, and its own CLI reported $0.32. Trace2Skill's count is exact (every OpenAI call made by its subprocesses is metered).

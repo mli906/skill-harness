@@ -1,0 +1,38 @@
+{
+  "corpus_version": 1,
+  "benchmark": "ALFWorldC1Adapter",
+  "train_split": "train",
+  "reference_agent": "react_multistep (ReActMultiStepAgent)",
+  "model": "gpt-4o-mini",
+  "temperature": 0.7,
+  "k": 2,
+  "seed": 0,
+  "n_tasks": 4,
+  "n_traces": 8,
+  "n_success": 6,
+  "n_failure": 2,
+  "success_failure_ratio": "6:2",
+  "tokens_total": 101041,
+  "task_ids": [
+    "t_01e2e5623d",
+    "t_0f6416c591",
+    "t_f3008138ce",
+    "t_fb3e17bd63"
+  ],
+  "excluded_probe_ids": [
+    "t_934c109a34",
+    "t_992b7ee78d",
+    "t_c7cf71ea7e",
+    "t_e1604d6035"
+  ],
+  "excluded_test_ids": [
+    "t_4d61896076",
+    "t_653b7b6ea9",
+    "t_7b88aa6ce6",
+    "t_848aab2049",
+    "t_a11c0dee70",
+    "t_fec77c954f"
+  ],
+  "sha256": "7e9876c63534f710356964890eea2b6fe2147cd650f15c2882954b24fdaf5061",
+  "created": "2026-10-13T01:44:56-0400"
+}

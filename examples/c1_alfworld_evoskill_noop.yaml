@@ -1,0 +1,9 @@
+learner: evoskill
+gate: noop
+representation: skill_md
+benchmark: alfworld_c1
+base_model: gpt-4o-mini
+seed: 0
+retrieval_k: 3
+corpus_dir: corpora/alfworld_c1
+log_path: logs/c1_alfworld_evoskill_noop.jsonl

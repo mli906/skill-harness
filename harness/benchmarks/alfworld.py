@@ -49,6 +49,8 @@ def game_type(path: str) -> str:
 
 
 def make_env(gamefile: str, max_steps: int):
+    from harness.env_guard import check_env_allowed
+    check_env_allowed("ALFWorld environment")
     _alfworld_compat.apply()
     import textworld
     import textworld.gym
