@@ -1,0 +1,8 @@
+learner: raw_trace_rag
+gate: noop
+representation: raw_trace
+benchmark: alfworld
+base_model: openrouter/qwen/qwen-2.5-72b-instruct
+seed: 0
+retrieval_k: 3
+log_path: logs/m3q_alfworld_rawrag.jsonl

@@ -248,3 +248,18 @@ EvoSkill's build tokens are a **lower bound**: only tokens visible in its run ca
   editing the pinned checkout. Deferred: the confound is invisible at small n and
   the fix is non-trivial; revisit only if a scaled run shows Trace2Skill
   underperforming with household failure items phrased in spreadsheet terms.
+
+## M3-Qwen — ALFWorld with an open-model consuming agent (OpenRouter)
+
+Run: `scripts/m3q_run.sh [noskill evoskill_noop rawrag evoskill_frozen_noop]` (same M3 env: 2 task types, 4 learn / 4 probe / 6 test, step cap 30, seed 0).
+Consuming agent: `openrouter/qwen/qwen-2.5-72b-instruct`. EvoSkill still builds with `openai/gpt-4o`.
+Learn traces are now Qwen's own (C2), so EvoSkill/raw-RAG learn from Qwen traces. `evoskill_frozen` (`harness/learners/evoskill_frozen.py`) instead re-uses the M3 gpt-4o-mini-trace EvoSkill library unchanged, so only the agent differs.
+
+| config | success | avg_steps | w2c | c2w | lib | tokens_eval | tokens_build | unauth | M3 (gpt-4o-mini) success |
+|---|---|---|---|---|---|---|---|---|---|
+| no-skill | 0.50 | 18.3 | 0 | 0 | 0 | 80,413 | 0 | 6 | 0.50 |
+| EvoSkill + NoOp (fresh, Qwen traces) | 0.50 | 18.3 | 0 | 0 | 0 (EvoSkill: "all samples passed, no proposal") | 80,413 | 15,599 | 6 | 0.67 |
+| EvoSkill + NoOp (frozen M3 library) | 0.83 | 14.0 | 2 | 0 | 1 | 75,344 | 0 | 9 | 0.67 |
+| raw-trace RAG (k=3) | 0.67 | 17.0 | 1 | 0 | 4 | 185,082 | 0 | 11 | 0.33 |
+
+Frozen-library auditability reads 0.0 because its provenance points at the old project, not this run's traces. n=6: smoke test, not a statistical result.
