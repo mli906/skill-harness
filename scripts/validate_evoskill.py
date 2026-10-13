@@ -35,7 +35,8 @@ def main():
     from harness.types import SkillLibrary
 
     bench = OfficeQAAdapter()
-    train = bench.train_tasks()
+    from harness.runner import _split_probe
+    train, _probe = _split_probe(bench, bench.train_tasks(), a.seed)  # same learner split as run()
     lookup = {task_id(t): t for t in train}
     learner = E.EvoSkillLearner(a.model, bench, lookup, a.seed,
                                 workdir="logs/evoskill_validation")

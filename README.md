@@ -74,7 +74,7 @@ New files only. The interface modules, `types.py` and `runner.run` are untouched
 | `scripts/validate_evoskill.py` | GO/NO-GO check: standalone EvoSkill vs harness-wrapped, on the same subset and seed. |
 | `examples/m1_officeqa_*.yaml` | `empty` (retrieval_k 0: benchmark + ReActAgent alone), `evoskill_noop`, `evoskill_nonregression`. |
 
-Install: `pip install -r requirements.txt -r requirements-evoskill.txt`. EvoSkill is pinned to `sentient-agi/EvoSkill@36f6f04952293d7054145550c2b9f0b0411bff1c`.
+Install: `uv pip install --python .venv/bin/python -c constraints-evoskill.txt -r requirements.txt -r requirements-evoskill.txt`. EvoSkill is pinned to `sentient-agi/EvoSkill@36f6f04952293d7054145550c2b9f0b0411bff1c`. The constraints come from EvoSkill's own `uv.lock` at that SHA; it needs openhands-sdk 1.16.1, and newer releases break it.
 
 Data:
 * `OFFICEQA_SOURCE=hf` needs `HF_TOKEN` with access granted to the gated `databricks/officeqa` dataset.
@@ -95,3 +95,10 @@ Notes:
 * EvoSkill consumes Q/A rows, not recorded traces. It re-executes them with its own base agent and splits them into its own train/val, using only the learner's traces. So probe and test tasks never reach it.
 * EvoSkill has no seed parameter: its split is fixed at `random_state=42`, and its LLM calls are unseeded.
 * `last_build_tokens` counts base-agent rollout usage from EvoSkill's run cache. Proposer and generator usage is not cached by EvoSkill, so it is not included.
+
+### M1 status (real runs, 2026-10-12)
+* Empty-library OfficeQA (HF, `--limit 20`, gpt-4o-mini, fixed ReActAgent): **0/6 test, 0/14 train**. The result was the same with 8×2000-char retrieved context.
+* EvoSkill does not complete with OpenAI direct at the pinned SHA:
+  * **openhands** harness: OpenAI rejects EvoSkill's `AgentResponse` structured-output schema (HTTP 400, `additionalProperties` must be false).
+  * **codex** harness (codex-cli 0.162.1): the Codex session completes, but the `openai-codex-sdk` call never returns, so EvoSkill times out.
+  * Next options: route through OpenRouter (EvoSkill's tested path for non-Anthropic models), use Claude via `ANTHROPIC_API_KEY`, or pin an older codex CLI.

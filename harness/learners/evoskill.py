@@ -96,6 +96,9 @@ type = "multi_tolerance"
     git = ["git", "-c", "user.name=skill-harness", "-c", "user.email=harness@localhost"]
     if not (root / ".git").exists():
         subprocess.run(["git", "init", "-q", "-b", "main"], cwd=root, check=True)
+        # EvoSkill commits program branches; give the isolated repo a local identity.
+        subprocess.run(["git", "config", "user.name", "skill-harness"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "harness@localhost"], cwd=root, check=True)
         subprocess.run(["git", "add", "-A"], cwd=root, check=True)
         subprocess.run(git + ["commit", "-qm", "init"], cwd=root, check=True)
     return root
