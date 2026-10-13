@@ -22,6 +22,7 @@ Pipeline, all Trace2Skill entrypoints unchanged:
 Output skill dir -> one Skill (representation skill_md, content = SKILL.md +
 any extra files, provenance = corpus task_ids analysed).
 Env: TRACE2SKILL_MODEL (default gpt-4o), TRACE2SKILL_WORKERS (4),
+TRACE2SKILL_MODEL=openrouter/<id> routes the build via OpenRouter (build_routing),
 TRACE2SKILL_REUSE=1 (reuse a finished workdir keyed on corpus hash+seed+model),
 TRACE2SKILL_WORKDIR (default logs/trace2skill).
 """
@@ -115,6 +116,8 @@ class Trace2SkillLearner(Learner):
         self.corpus_records = corpus_records   # optional: rollout index + gold per trace
         self.last_build_tokens = 0
         self.model = os.environ.get("TRACE2SKILL_MODEL", "gpt-4o")
+        from harness.learners.build_routing import resolve
+        self.route = resolve(self.model)   # openrouter/<id> or $BUILD_BASE_URL; default OpenAI
 
     @classmethod
     def from_context(cls, ctx):
@@ -147,8 +150,11 @@ class Trace2SkillLearner(Learner):
     def _run(self, root: Path, work: Path, tag: str, *args, cwd: Path | None = None) -> dict:
         usage = work / f"usage_{tag}.json"
         cmd = [sys.executable, "-m", "harness.learners.trace2skill_compat", str(root), str(usage), *args]
-        env = {**os.environ, "OPENAI_BASE_URL": os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1"),
-               "PYTHONPATH": str(Path(__file__).resolve().parents[2])}
+        if self.route.provider == "openai":   # unchanged default behaviour
+            env = {**os.environ, "OPENAI_BASE_URL": os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")}
+        else:
+            env = self.route.subprocess_env()
+        env["PYTHONPATH"] = str(Path(__file__).resolve().parents[2])
         with open(work / f"{tag}.log", "w") as lf:
             rc = subprocess.run(cmd, cwd=cwd or root, env=env, stdout=lf, stderr=subprocess.STDOUT).returncode
         if rc != 0:
@@ -170,7 +176,7 @@ class Trace2SkillLearner(Learner):
             names = self.write_logs(traces, logs)
             n_fail = sum(n.endswith("_FAILED.md") for n in names)
             n_succ = len(names) - n_fail
-            api = ["--model", self.model, "--base_url", "https://api.openai.com/v1", "--seed", str(self.seed)]
+            api = ["--model", self.route.api_model, "--base_url", self.route.base_url, "--seed", str(self.seed)]
             w = os.environ.get("TRACE2SKILL_WORKERS", "4")
             usages = {}
             if n_fail:
@@ -197,7 +203,7 @@ class Trace2SkillLearner(Learner):
                 import shutil; shutil.rmtree(final)
             usages["evolution"] = self._run(root, work, "evolution", "-m", "skill_evolver.run_parallel_combined_skill_evolution",
                 "--error-json", str(work / "error_parsed.json"), "--success-json", str(work / "success_parsed.json"),
-                "--skill-dir", str(skill_dir), "--model", self.model, "--base-url", "https://api.openai.com/v1",
+                "--skill-dir", str(skill_dir), "--model", self.route.api_model, "--base-url", self.route.base_url,
                 "--seed", str(self.seed), "--max-workers", w, "--save-intermediates",
                 "--intermediates-dir", str(work / "intermediates"), "--changelog", str(work / "change.log"),
                 "--parse-failure-dir", str(work / "parse_failures"), "--output-dir", str(final), cwd=work)
