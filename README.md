@@ -96,9 +96,23 @@ Notes:
 * EvoSkill has no seed parameter: its split is fixed at `random_state=42`, and its LLM calls are unseeded.
 * `last_build_tokens` counts base-agent rollout usage from EvoSkill's run cache. Proposer and generator usage is not cached by EvoSkill, so it is not included.
 
-### M1 status (real runs, 2026-10-12)
-* Empty-library OfficeQA (HF, `--limit 20`, gpt-4o-mini, fixed ReActAgent): **0/6 test, 0/14 train**. The result was the same with 8×2000-char retrieved context.
-* EvoSkill does not complete with OpenAI direct at the pinned SHA:
-  * **openhands** harness: OpenAI rejects EvoSkill's `AgentResponse` structured-output schema (HTTP 400, `additionalProperties` must be false).
-  * **codex** harness (codex-cli 0.162.1): the Codex session completes, but the `openai-codex-sdk` call never returns, so EvoSkill times out.
-  * Next options: route through OpenRouter (EvoSkill's tested path for non-Anthropic models), use Claude via `ANTHROPIC_API_KEY`, or pin an older codex CLI.
+### M1 deviations
+* **OpenAI compatibility shim** (`harness/learners/evoskill_compat.py`):
+  * The pinned EvoSkill's OpenHands fallback extraction sends a strict `json_schema` built from pydantic, and OpenAI rejects it (HTTP 400).
+  * The shim wraps `openhands.sdk.llm.LLM.completion` in-process. Before each call it makes the schema strict-compatible: `additionalProperties:false`, every property required, `default` removed.
+  * It then calls EvoSkill's own CLI unchanged. No installed EvoSkill file is edited.
+  * The standalone validation and `EvoSkillLearner` launch EvoSkill the same way (`run_evoskill`), so the comparison stays fair.
+* **Dependency pins:** EvoSkill's dependencies are pinned from its own `uv.lock` (`constraints-evoskill.txt`).
+* **`EVOSKILL_EXPORT=frontier_union`** (smoke runs use it with `EVOSKILL_FRONTIER=2`):
+  * It exports skills from every frontier program, not just EvoSkill's best.
+  * On a 0-baseline subset, EvoSkill's own frontier discards every candidate on a 0-vs-0 tie. Without this, the harness Gate never sees a candidate.
+  * The default (`best`) keeps EvoSkill's native selection.
+
+### M1 status (real runs, 2026-10-12, gpt-4o-mini, HF OfficeQA)
+* **Empty-library OfficeQA** (`--limit 20`): 0/6 test, 0/14 train. The result was the same with 8×2000-char context.
+* **With the shim, EvoSkill completes its loop on OpenAI.** It ran the base eval, a failure, the skill proposer, the skill generator and the frontier update.
+* **Smoke size** (`--limit 10`; 4 learner rows, 4 probe, 2 test; 1 iteration):
+  * Standalone and wrapped agree: 4 rows in, 1 native val sample, 0 skills out. Verdict GO (structurally consistent).
+  * gpt-4o-mini's skill **generator** never wrote a `.claude/skills/*/SKILL.md`. The kept child program only changed `program.yaml`, so no Skill reached the harness.
+  * Both gates therefore got an empty library: success 0.0, 0 flips.
+  * Learn/probe/test task sets are pairwise disjoint in the real logs.

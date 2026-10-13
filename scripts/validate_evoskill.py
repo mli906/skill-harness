@@ -49,10 +49,10 @@ def main():
                     os.environ.get("EVOSKILL_HARNESS", "openhands"))
     rc = E.run_evoskill(root, root / "evoskill_stdout.log")
     log = (root / "evoskill_stdout.log").read_text(errors="ignore")
-    prog = E.best_program(root) if rc == 0 else None
-    sa_sk = E.read_skills(root, prog) if prog else {}
+    prog, sa_sk = E.export_skills(root) if rc == 0 else (None, {})
     standalone = {"rc": rc, "rows_in": len(rows), **E.native_split_counts(log), "best_program": prog,
-                  "skills_out": len(sa_sk), "skill_names": sorted(sa_sk), "tokens": E.cache_tokens(root)}
+                  "skills_out": len(sa_sk), "skill_names": sorted(sa_sk),
+                  "skill_summaries": {k: v[:300] for k, v in sa_sk.items()}, "tokens": E.cache_tokens(root)}
     # wrapped
     agent = ReActAgent(make_client(a.model), bench, a.seed)
     rep = SkillMdRepresentation(make_embedder(a.model))
@@ -60,6 +60,7 @@ def main():
     skills = learner.induce(traces, SkillLibrary([]))
     wrapped = {**learner.last_stats, "tokens": learner.last_build_tokens,
                "skill_ids": [s.id for s in skills],
+               "skill_summaries": {s.id: s.content[:300] for s in skills},
                "provenance_ok": all(set(s.provenance) == set(lookup) for s in skills),
                "all_skill_md": all(s.content.lstrip().startswith("---") for s in skills)}
     same_rows = standalone["rows_in"] == wrapped["rows_written"] == wrapped["traces_in"]

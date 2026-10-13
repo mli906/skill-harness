@@ -106,10 +106,13 @@ type = "multi_tolerance"
 
 def run_evoskill(root: Path, log_file: Path) -> int:
     """Invoke EvoSkill's own CLI, unchanged."""
-    exe = Path(sys.executable).with_name("evoskill")
-    cmd = [str(exe) if exe.exists() else "evoskill", "run", "--quiet",
+    # Launch via the compat shim (patches OpenAI strict-schema issue in-process,
+    # then calls EvoSkill's CLI unchanged). Used identically by standalone validation.
+    cmd = [sys.executable, "-m", "harness.learners.evoskill_compat", "run", "--quiet",
            "--config", str(root / ".evoskill" / "config.toml")]
-    env = dict(os.environ, EVOSKILL_REMOTE="1")  # force local execution
+    repo = str(Path(__file__).resolve().parents[2])
+    env = dict(os.environ, EVOSKILL_REMOTE="1",  # force local execution
+               PYTHONPATH=repo + os.pathsep + os.environ.get("PYTHONPATH", ""))
     with open(log_file, "w") as lf:
         return subprocess.run(cmd, cwd=root, env=env, stdout=lf, stderr=subprocess.STDOUT).returncode
 
@@ -123,6 +126,23 @@ def best_program(root: Path) -> str:
     from src.registry import ProgramManager  # EvoSkill package
     best = ProgramManager(cwd=root).get_best_from_frontier()
     return best or "base"
+
+
+def export_skills(root: Path) -> tuple[str, dict[str, str]]:
+    """EVOSKILL_EXPORT=best (default): skills of EvoSkill's best frontier program.
+    EVOSKILL_EXPORT=frontier_union: union of skills over all frontier programs
+    (lets the harness Gate, not EvoSkill's frontier, make the admission call)."""
+    mode = os.environ.get("EVOSKILL_EXPORT", "best")
+    if mode == "frontier_union":
+        from src.registry import ProgramManager
+        progs = ProgramManager(cwd=root).get_frontier() or ["base"]
+        merged: dict[str, str] = {}
+        for p in progs:
+            for k, v in read_skills(root, p).items():
+                merged.setdefault(k, v)
+        return "+".join(progs), merged
+    prog = best_program(root)
+    return prog, read_skills(root, prog)
 
 
 def read_skills(root: Path, program: str) -> dict[str, str]:
@@ -201,8 +221,7 @@ class EvoSkillLearner(Learner):
         log_text = log_file.read_text(errors="ignore")
         if rc != 0:
             raise RuntimeError(f"EvoSkill exited {rc}; see {log_file}")
-        prog = best_program(root)
-        skills_raw = read_skills(root, prog)
+        prog, skills_raw = export_skills(root)
         version = 1 + max((s.version for s in current.skills), default=0)
         prov = [t.task_id for t in traces]
         skills = [Skill(id=f"evoskill_{name}_v{version}", content=content, representation="skill_md",
