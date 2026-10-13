@@ -229,3 +229,22 @@ Design notes and deviations:
 | EvoSkill + NonReg | 0.50 | 18.5 | 98,397 | 165,383 (61,193 lower bound + 104,190) | 0 | 0 | 1 | 1.0 | 18 | 0 |
 
 EvoSkill's build tokens are a **lower bound**: only tokens visible in its run cache are counted, and its own CLI reported $0.32. Trace2Skill's count is exact (every OpenAI call made by its subprocesses is metered).
+
+### Known limitations (C1 track)
+
+* **Trace2Skill analyst prompts are off-domain (framing-level confound, documented not fixed).**
+  The wrapper adapts the *input format* (ALFWorld logs → native markdown) and the
+  *seed skill* (`alfworld-household`), but runs Trace2Skill's native
+  `analysis/run_{error,success}_analysis_llm.py` unchanged. Those analysts load
+  fixed prompt files (`analysis/error_analysis_system_llm.txt` etc.) written for
+  **spreadsheet** tasks: the system prompt says "expert failure-analysis agent for
+  spreadsheet manipulation tasks" and gives spreadsheet failure examples (wrong
+  range, off-by-one, formula logic). ~90% of the prompt is domain-agnostic
+  methodology, so this is a *framing* bias, not a structural mismatch — Trace2Skill
+  still produces sane ALFWorld skills, but the analyst is primed toward the wrong
+  failure vocabulary. The entrypoints expose no prompt-override arg and load from
+  fixed SCRIPT_DIR paths, so a clean fix would inject ALFWorld prompts via the
+  compat shim (which already intercepts the subprocess for token counting) without
+  editing the pinned checkout. Deferred: the confound is invisible at small n and
+  the fix is non-trivial; revisit only if a scaled run shows Trace2Skill
+  underperforming with household failure items phrased in spreadsheet terms.
