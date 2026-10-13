@@ -55,7 +55,7 @@ def _env(name, default):
 
 
 def write_project(root: Path, rows: list[dict], data_dirs: list[str], model: str,
-                  harness_name: str) -> Path:
+                  harness_name: str, bench=None) -> Path:
     """Create an isolated EvoSkill project (same layout as its examples/officeqa)."""
     root.mkdir(parents=True, exist_ok=True)
     (root / ".evoskill").mkdir(exist_ok=True)
@@ -87,10 +87,9 @@ category_column = "category"
 train_ratio = {_env('EVOSKILL_TRAIN_RATIO', 0.5)}
 val_ratio = {_env('EVOSKILL_VAL_RATIO', 0.5)}
 
-[scorer]
-type = "multi_tolerance"
-""")
-    (root / ".evoskill" / "task.md").write_text(TASK_MD)
+""" + (bench.evoskill_scorer_toml(root) if hasattr(bench, "evoskill_scorer_toml")
+       else '[scorer]\ntype = "multi_tolerance"\n'))
+    (root / ".evoskill" / "task.md").write_text(getattr(bench, "EVOSKILL_TASK_MD", TASK_MD))
     (root / ".evoskill" / "state.json").write_text('{"original_branch": "main"}')
     (root / ".gitignore").write_text(".cache/\n")
     # Pre-create the skills dir (EvoSkill's own examples ship one). Without it, an
@@ -239,6 +238,8 @@ class EvoSkillLearner(Learner):
         rows = []
         for t in traces:
             task = self.task_lookup[t.task_id]
+            if hasattr(self.bench, "evoskill_row"):  # benchmark-specific native mapping
+                rows.append({"uid": t.task_id, **self.bench.evoskill_row(task, t)}); continue
             q = getattr(self.bench, "question", None)
             rows.append({"uid": t.task_id,
                          "question": q(task) if callable(q) else task,
@@ -261,7 +262,7 @@ class EvoSkillLearner(Learner):
         log_file = root / "evoskill_stdout.log"
         if reuse is None:
             write_project(root, rows, data_dirs_for(self.bench, rows, root.parent / f"data_{key}"), model,
-                          os.environ.get("EVOSKILL_HARNESS", "openhands"))
+                          os.environ.get("EVOSKILL_HARNESS", "openhands"), bench=self.bench)
             rc = run_evoskill(root, log_file)
             if rc == 0:
                 (root / ".evoskill" / "done").write_text("ok")

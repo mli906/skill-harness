@@ -1,9 +1,9 @@
 from harness import registry
 
 
-def test_registry_m1_plugins():
-    assert registry.available("learner") == ["evoskill", "trivial"]
-    assert registry.available("gate") == ["non_regression", "noop"]
-    assert registry.available("benchmark") == ["officeqa", "officeqa_v2", "synthetic"]
-    assert registry.available("representation") == ["skill_md"]
-    assert registry.available("agent") == ["react"]
+def test_registry_contains_milestone_plugins():
+    assert {"evoskill", "trivial", "raw_trace_rag"} <= set(registry.available("learner"))
+    assert registry.available("gate") == ["non_regression", "noop"]  # no new gates
+    assert {"officeqa", "officeqa_v2", "alfworld", "synthetic"} <= set(registry.available("benchmark"))
+    assert {"skill_md", "raw_trace"} <= set(registry.available("representation"))
+    assert {"react", "react_multistep"} <= set(registry.available("agent"))

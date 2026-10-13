@@ -32,7 +32,6 @@ class HashedBowEmbedder(Embedder):
 
 
 class OpenAIEmbedder(Embedder):
-    MAX_CHARS = 12000  # stay under the 8192-token input limit for numeric/table text
     def __init__(self, model: str):
         self.model = model
         self.key = os.environ["OPENAI_API_KEY"]
@@ -40,7 +39,7 @@ class OpenAIEmbedder(Embedder):
 
     def embed(self, text: str) -> list[float]:
         req = urllib.request.Request(f"{self.base}/embeddings",
-                                     data=json.dumps({"model": self.model, "input": text[:self.MAX_CHARS]}).encode(),
+                                     data=json.dumps({"model": self.model, "input": text}).encode(),
                                      headers={"Authorization": f"Bearer {self.key}",
                                               "Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=60) as r:

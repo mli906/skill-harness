@@ -20,6 +20,9 @@ from pathlib import Path
 from harness.benchmarks.officeqa import OfficeQAAdapter, BM25, HF_REPO, HF_PARSED_DIR
 from harness.benchmarks import _pinned
 from harness.registry import register
+from harness.llm import embedding_safe
+
+embedding_safe.apply()
 
 MONTHS = {m: i + 1 for i, m in enumerate(
     ["january", "february", "march", "april", "may", "june", "july", "august",

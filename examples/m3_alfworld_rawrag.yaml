@@ -1,0 +1,8 @@
+learner: raw_trace_rag
+gate: noop
+representation: raw_trace
+benchmark: alfworld
+base_model: gpt-4o-mini
+seed: 0
+retrieval_k: 3
+log_path: logs/m3_alfworld_rawrag.jsonl

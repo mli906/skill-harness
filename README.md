@@ -164,3 +164,28 @@ The literal answer string appears in the context for 0/10 with v2 (1/10 with v1)
   * NonRegressionGate probe was 0.0 before and after, with no per-category drop.
   * The gates are uninformative at a 0 baseline.
 * Learn/probe/test sets are pairwise disjoint in both logs.
+
+## M3 — ALFWorld (minimal-sample GO/NO-GO)
+
+Run: `ALFWORLD_TYPES=pick_and_place_simple,look_at_obj_in_light ALFWORLD_TRAIN_PER_CAT=4 ALFWORLD_LIMIT=14 python -m harness.alfworld_run --config examples/m3_alfworld_<noskill|evoskill_noop|evoskill_nonregression|rawrag>.yaml`
+(EvoSkill: `EVOSKILL_MODEL=openai/gpt-4o EVOSKILL_ITERATIONS=1 EVOSKILL_FRONTIER=2 EVOSKILL_EXPORT=frontier_union EVOSKILL_REUSE=1`).
+Data: `alfworld-download` (alfworld==0.4.2 pinned, textworld 1.7.0), split json_2.1.1/valid_seen, seed 0, 4 learn / 4 probe / 6 test, disjoint.
+
+| config | success | avg_steps | w2c | c2w | lib | tokens_eval | tokens_build | unauth |
+|---|---|---|---|---|---|---|---|---|
+| no-skill | 0.50 | 21.0 | 0 | 0 | 1 (k=0, not injected) | 89,416 | 950 | 10 |
+| EvoSkill + NoOp | 0.67 | 16.7 | 1 | 0 | 1 | 91,804 | 33,947 | 9 |
+| EvoSkill + NonRegression | 0.67 | 16.7 | 1 | 0 | 1 (admitted, probe 0.25→0.25) | 91,804 | 215,241 | 9 |
+| raw-trace RAG (k=3) | 0.33 | 23.8 | 0 | 1 | 4 | 316,621 | 0 | 32 |
+
+n=6 test tasks: this is a smoke test showing the pipeline works, not a statistical result.
+
+Design notes and deviations:
+- `verify` returns the ALFWorld env's own `won` flag, recorded while the agent ran (`env_reset`/`env_step` on the adapter).
+- `run()` hard-codes agent "react". `harness/alfworld_run.py` points that registry slot at `ReActMultiStepAgent` without editing M0. That agent shows the admissible commands each turn and caps episodes at 30 steps. `unauthorized_actions` counts actions outside the admissible commands.
+- `_alfworld_compat` patches textworld for py3.13: PEP 667 broke `locals().update`.
+- `harness/llm/cache.py`: an on-disk LLM cache keyed on (model, prompt, seed, max_tokens), so identical no-skill episodes are shared across configs.
+- Embedding truncation moved to `harness/llm/embedding_safe.py`. M0 `embedding.py` is restored.
+- EvoSkill cannot drive the env interactively. Each row it gets is the task plus our agent's previous trajectory. Its agent outputs an open-loop command plan, and a script scorer (`harness.benchmarks.alfworld_score`) replays that plan in the real env (won → 1.0).
+- `evoskill_compat` now also makes OpenHands `file_editor` create parent directories. Without it, the skill builder left an empty `.claude/skills/<name>` file (0-content skill; attempt 1 had library_size 0).
+- Only 2 task categories are used, to keep the sample minimal.

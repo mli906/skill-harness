@@ -1,0 +1,8 @@
+learner: trivial
+gate: noop
+representation: skill_md
+benchmark: alfworld
+base_model: gpt-4o-mini
+seed: 0
+retrieval_k: 0
+log_path: logs/m3_alfworld_noskill.jsonl

@@ -57,7 +57,26 @@ def apply() -> None:
     def completion(self, *args, **kwargs):
         return orig(self, *args, **_fix_kwargs(kwargs))
     LLM.completion = completion
+    _patch_file_editor_mkdir()
     _PATCHED = True
+
+
+def _patch_file_editor_mkdir() -> None:
+    """OpenHands file_editor `create` does not create parent directories, so the
+    skill builder's `.claude/skills/<name>/SKILL.md` write fails (ENOENT) and the
+    agent then creates `<name>` as an empty FILE -> zero-content skill. Make
+    write_file mkdir parents first (in-process only; installed files untouched)."""
+    from openhands.tools.file_editor.editor import FileEditor
+    orig_write = FileEditor.write_file
+
+    def write_file(self, path, *a, **k):
+        try:
+            from pathlib import Path
+            Path(path).parent.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            pass
+        return orig_write(self, path, *a, **k)
+    FileEditor.write_file = write_file
 
 
 def main(argv: list[str]) -> None:
