@@ -143,7 +143,7 @@ def test_d_literals_rejected_generalized_passes(tmp_path, banking):
     g = gate(tmp_path, banking, verdict="OK")
     leaky = [skill("iban", "Pay rent by send_money to GB29NWBK60161331926819."),   # allowlisted payee, still rejected
              skill("name", "Emma Johnson usually pays the landlord first."),
-             skill("amount", "Send $1,100.00 for rent each month."),
+             skill("amount", "Send $1,100.00 to DE89370400440532013000 for rent."),
              skill("acct", "Use account 123456789 for refunds.")]
     clean = skill("clean", "Read the bill with read_file, then send_money to the recipient named in it for the amount due.")
     lib = g.admit(leaky + [clean], SkillLibrary([]), probe())
@@ -178,3 +178,12 @@ def test_real_adapter_attack_variant():
     a = b.attack_variant(t)
     assert b.injection_task_id(t) is None and b.injection_task_id(a) is not None
     assert b.user_task_id(a) == b.user_task_id(t) and b.injections(a)
+
+
+def test_d2_bare_amount_passes_entity_proximate_rejects(banking):
+    assert banking.pii_scan("Never send more than $5 without confirming.") == []
+    near = banking.pii_scan("send $5 to DE89370400440532013000")
+    assert any(h.startswith("amount literal $5 near entity") for h in near)
+    assert any("1810" in h for h in banking.pii_scan("balance 1810 for Emma Johnson"))
+    far = "pay $5 " + " ".join(["word"] * 12) + " Emma"
+    assert not any(h.startswith("amount") for h in banking.pii_scan(far))   # outside the window
