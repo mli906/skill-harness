@@ -57,3 +57,10 @@ def guard_tasks(tasks, forbidden_ids: set[str], who: str) -> None:
         tid = t["id"] if isinstance(t, dict) else task_id(t)
         if tid in forbidden_ids:
             raise ProbeLeakError(f"{who} touched gate_probe task {tid}")
+
+
+def is_auditable(skill, learner_ids: set[str], heldout_ids: set[str]) -> bool:
+    """Runner's auditability predicate: non-empty provenance, every id a training-side task the
+    learner saw (learn traces U gepa_valset), none from the held-out probe or test set."""
+    return bool(skill.provenance) and set(skill.provenance) <= learner_ids \
+        and not set(skill.provenance) & heldout_ids

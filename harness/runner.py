@@ -8,7 +8,7 @@ from harness.context import Context
 from harness.llm import make_client, make_embedder
 from harness.logging_utils import JsonlLogger
 from harness.seeding import rng, task_id
-from harness.splits import carve_valset, check_disjoint, guard_tasks
+from harness.splits import carve_valset, check_disjoint, guard_tasks, is_auditable
 from harness.types import RunConfig, Scorecard, SkillLibrary, Trace
 
 PROBE_PER_CATEGORY = 2
@@ -89,8 +89,7 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     # gepa_valset is a training-side slice the learner legitimately optimised on.
     learner_ids = {t.task_id for t in learn_traces} | {task_id(t) for t in valset_tasks}
     heldout_ids = {task_id(t) for t in probe_tasks + test}
-    audited = [s for s in lib.skills if s.provenance
-               and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
+    audited = [s for s in lib.skills if is_auditable(s, learner_ids, heldout_ids)]
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),
