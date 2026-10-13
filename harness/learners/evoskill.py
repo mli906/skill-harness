@@ -93,6 +93,11 @@ type = "multi_tolerance"
     (root / ".evoskill" / "task.md").write_text(TASK_MD)
     (root / ".evoskill" / "state.json").write_text('{"original_branch": "main"}')
     (root / ".gitignore").write_text(".cache/\n")
+    # Pre-create the skills dir (EvoSkill's own examples ship one). Without it, an
+    # agent's first file-editor "create .claude/skills" can make it a plain FILE,
+    # after which every SKILL.md write fails with ENOTDIR.
+    (root / ".claude" / "skills").mkdir(parents=True, exist_ok=True)
+    (root / ".claude" / "skills" / ".gitkeep").write_text("")
     git = ["git", "-c", "user.name=skill-harness", "-c", "user.email=harness@localhost"]
     if not (root / ".git").exists():
         subprocess.run(["git", "init", "-q", "-b", "main"], cwd=root, check=True)
@@ -179,6 +184,38 @@ def cache_tokens(root: Path) -> int:
     return total
 
 
+def data_dirs_for(bench, rows: list[dict], out: Path) -> list[str]:
+    """Corpus dir handed to EvoSkill's agents. If the benchmark supports date
+    narrowing (officeqa_v2), expose only the date-candidate bulletins for these
+    rows (symlinks), mirroring the harness retrieval scope and bounding cost."""
+    corpus = getattr(bench, "corpus_dir", None)
+    if not corpus:
+        return []
+    corpus = Path(corpus).resolve()
+    by_file = getattr(bench, "_by_file", None)
+    if by_file is None:
+        return [str(corpus)]
+    from harness.benchmarks.officeqa_v2 import date_candidates
+    names = set()
+    for r in rows:
+        names |= set(date_candidates(r["question"], list(by_file)))
+    if not names:
+        return [str(corpus)]
+    out.mkdir(parents=True, exist_ok=True)
+    for n in sorted(names):
+        link = out / n
+        if not link.exists():
+            link.symlink_to(corpus / n)
+    return [str(out.resolve())]
+
+
+def _cache_key(rows: list[dict], model: str) -> str:
+    import hashlib
+    keys = sorted(k for k in os.environ if k.startswith("EVOSKILL_") and k not in ("EVOSKILL_WORKDIR", "EVOSKILL_REUSE"))
+    blob = json.dumps([rows, model, [(k, os.environ[k]) for k in keys]], sort_keys=True)
+    return hashlib.sha256(blob.encode()).hexdigest()[:16]
+
+
 def native_split_counts(log_text: str) -> dict:
     m = re.search(r"\((\d+) val samples\)", log_text)
     return {"val": int(m.group(1)) if m else None}
@@ -211,13 +248,25 @@ class EvoSkillLearner(Learner):
 
     def induce(self, traces: list[Trace], current: SkillLibrary) -> list[Skill]:
         rows = self.traces_to_rows(traces)
-        corpus = getattr(self.bench, "corpus_dir", None)
         model = os.environ.get("EVOSKILL_MODEL", f"openai/{self.base_model}")
-        root = (self.workdir / f"seed{self.seed}_{int(time.time())}").resolve()
-        write_project(root, rows, [str(Path(corpus).resolve())] if corpus else [], model,
-                      os.environ.get("EVOSKILL_HARNESS", "openhands"))
+        key = _cache_key(rows, model)
+        # EVOSKILL_REUSE=1: reuse a finished EvoSkill project with identical input
+        # rows + model + EVOSKILL_* settings (e.g. both gates share one induction).
+        reuse = None
+        if os.environ.get("EVOSKILL_REUSE") == "1":
+            for d in sorted(self.workdir.glob(f"*_{key}"), reverse=True):
+                if (d / ".evoskill" / "done").exists():
+                    reuse = d.resolve(); break
+        root = reuse or (self.workdir / f"seed{self.seed}_{int(time.time())}_{key}").resolve()
         log_file = root / "evoskill_stdout.log"
-        rc = run_evoskill(root, log_file)
+        if reuse is None:
+            write_project(root, rows, data_dirs_for(self.bench, rows, root.parent / f"data_{key}"), model,
+                          os.environ.get("EVOSKILL_HARNESS", "openhands"))
+            rc = run_evoskill(root, log_file)
+            if rc == 0:
+                (root / ".evoskill" / "done").write_text("ok")
+        else:
+            rc = 0
         log_text = log_file.read_text(errors="ignore")
         if rc != 0:
             raise RuntimeError(f"EvoSkill exited {rc}; see {log_file}")
@@ -228,7 +277,7 @@ class EvoSkillLearner(Learner):
                         provenance=list(prov), version=version) for name, content in sorted(skills_raw.items())]
         self.last_build_tokens = cache_tokens(root)
         self.last_stats = {"project": str(root), "traces_in": len(traces), "rows_written": len(rows),
-                           "best_program": prog, "skills_out": len(skills), **native_split_counts(log_text)}
+                           "best_program": prog, "skills_out": len(skills), "reused": reuse is not None, **native_split_counts(log_text)}
         if self.logger:
             self.logger.log("learner.induce", learner="evoskill", tokens=self.last_build_tokens,
                             stats=self.last_stats, skill_ids=[s.id for s in skills])

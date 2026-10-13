@@ -1,0 +1,8 @@
+learner: trivial
+gate: noop
+representation: skill_md
+benchmark: officeqa_v2
+base_model: gpt-4o
+seed: 0
+retrieval_k: 0
+log_path: logs/m2_officeqa_v2_empty_gpt4o.jsonl

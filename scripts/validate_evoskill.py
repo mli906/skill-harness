@@ -23,10 +23,12 @@ def main():
     ap.add_argument("--limit", type=int, default=10)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--model", default="gpt-4o-mini")
+    ap.add_argument("--benchmark", default="officeqa")
     ap.add_argument("--out", default="logs/evoskill_validation.json")
     a = ap.parse_args()
     os.environ["OFFICEQA_LIMIT"] = str(a.limit)
-    from harness.benchmarks.officeqa import OfficeQAAdapter
+    from harness import registry
+    from harness.context import Context
     from harness.learners import evoskill as E
     from harness.agents.react import ReActAgent
     from harness.representations.skill_md import SkillMdRepresentation
@@ -34,7 +36,7 @@ def main():
     from harness.seeding import task_id
     from harness.types import SkillLibrary
 
-    bench = OfficeQAAdapter()
+    bench = registry.build("benchmark", a.benchmark, None)
     from harness.runner import _split_probe
     train, _probe = _split_probe(bench, bench.train_tasks(), a.seed)  # same learner split as run()
     lookup = {task_id(t): t for t in train}
@@ -44,7 +46,7 @@ def main():
     rows = [{"uid": task_id(t), "question": bench.question(t), "answer": bench.answer(t),
              "category": bench.category(t)} for t in train]
     root = Path(f"logs/evoskill_validation/standalone_{int(time.time())}").resolve()
-    E.write_project(root, rows, [str(Path(bench.corpus_dir).resolve())],
+    E.write_project(root, rows, E.data_dirs_for(bench, rows, root.parent / "data_standalone"),
                     os.environ.get("EVOSKILL_MODEL", f"openai/{a.model}"),
                     os.environ.get("EVOSKILL_HARNESS", "openhands"))
     rc = E.run_evoskill(root, root / "evoskill_stdout.log")

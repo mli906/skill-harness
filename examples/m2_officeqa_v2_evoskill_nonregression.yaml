@@ -1,0 +1,8 @@
+learner: evoskill
+gate: non_regression
+representation: skill_md
+benchmark: officeqa_v2
+base_model: gpt-4o-mini
+seed: 0
+retrieval_k: 3
+log_path: logs/m2_officeqa_v2_evoskill_nonregression.jsonl

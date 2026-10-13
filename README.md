@@ -116,3 +116,51 @@ Notes:
   * gpt-4o-mini's skill **generator** never wrote a `.claude/skills/*/SKILL.md`. The kept child program only changed `program.yaml`, so no Skill reached the harness.
   * Both gates therefore got an empty library: success 0.0, 0 flips.
   * Learn/probe/test task sets are pairwise disjoint in the real logs.
+
+### M2: retrieval fixes and EvoSkill with gpt-4o (2026-10-13)
+
+**New files**
+* `harness/benchmarks/officeqa_v2.py` (`benchmark: officeqa_v2`):
+  * date-aware narrowing to `treasury_bulletin_YYYY_MM` files, with global fallback;
+  * table-aware chunking (title and header repeated on each split);
+  * up to 20 chunks within a 24k-char budget;
+  * tolerance 0.01 by default.
+  * The corpus is all date-candidate bulletins (283 files at limit 20), not only the gold files. v1's corpus was gold-only, which is an oracle.
+* `scripts/retrieval_recall.py`: recall on the diag question set.
+* `examples/m2_*.yaml`: configs for these runs.
+
+**Changes to existing files**
+* `EvoSkillLearner`:
+  * pre-creates `.claude/skills/`, because gpt-4o otherwise created it as a plain file and every SKILL.md write failed;
+  * gives EvoSkill's agents only the date-candidate bulletins (symlinks);
+  * `EVOSKILL_REUSE=1` reuses a finished induction with identical inputs, so both gates share one EvoSkill run.
+* `OpenAIEmbedder` truncates input to 12k chars, to stay under the 8192-token limit.
+* ReAct `max_steps` was not raised. It is already 6, and runs average 1–1.3 steps, so it is not binding. Raising it would mean editing the M0 agent or the runner.
+
+**Recall on the 10 diag questions (any gold-file chunk in top 20)**
+
+| Corpus | Retrieval | Hit rate | Mean gold chunks |
+|---|---|---|---|
+| v1 (gold-only, oracle) | BM25 | 9/10 | 3.4 |
+| v2 (283 files) | global BM25 | 3/10 | 0.7 |
+| v2 (283 files) | date-narrowed | 8/10 | 3.4 |
+
+The literal answer string appears in the context for 0/10 with v2 (1/10 with v1). Most answers are computed, not quoted.
+
+**Empty-library baseline, `--limit 20`, gpt-4o-mini**
+* v1: 0/6 test, 0/14 train.
+* v2: 0/6 test, 1/14 train (1/10 learn, 0/4 probe).
+* gpt-4o eval was skipped to stay within budget.
+
+**EvoSkill, gpt-4o, `--limit 10`, 1 iteration** (4 learner rows, 4 probe, 2 test)
+* Validation verdict: **NO-GO by outcome; structurally consistent.**
+  * Same 4 rows in and 1 native val sample on both sides.
+  * Standalone produced `information-inference-skill`.
+  * The wrapped attempt's generator wrote `data-path-verification` as an empty file, not a SKILL.md, so the adapter correctly extracted 0 skills.
+  * The divergence comes from LLM nondeterminism, not the adapter.
+* The gate runs' fresh induction produced `historical-document-retrieval`.
+* Both gates admitted it:
+  * success 0.0 and 0 flips on 2 test questions;
+  * NonRegressionGate probe was 0.0 before and after, with no per-category drop.
+  * The gates are uninformative at a 0 baseline.
+* Learn/probe/test sets are pairwise disjoint in both logs.
