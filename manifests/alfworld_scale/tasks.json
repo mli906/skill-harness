@@ -1,0 +1,730 @@
+{
+ "test": [
+  {
+   "game": "valid_seen/pick_and_place_simple-Tomato-None-Microwave-13/trial_T20190908_124829_632660/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_cfbd947ce0",
+   "task": "ALFWorld game 4eb3acf1\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put some tomato on microwave."
+  },
+  {
+   "game": "valid_seen/pick_and_place_simple-WineBottle-None-Shelf-7/trial_T20190907_200154_378982/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_07b2f40abf",
+   "task": "ALFWorld game 7a86da2d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put some winebottle on shelf."
+  },
+  {
+   "game": "valid_seen/pick_and_place_simple-Knife-None-SideTable-3/trial_T20190918_184236_557252/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_4d61896076",
+   "task": "ALFWorld game 14c49718\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a knife in sidetable."
+  },
+  {
+   "game": "valid_seen/pick_and_place_simple-Pencil-None-Desk-310/trial_T20190909_113054_894334/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_aca2bae211",
+   "task": "ALFWorld game 5afbdbb9\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a desk 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, and a sidetable 1.\n\nYour task is to: put some pencil on desk."
+  },
+  {
+   "game": "valid_seen/look_at_obj_in_light-AlarmClock-None-DeskLamp-323/trial_T20190909_044715_250790/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_3e2562b5bb",
+   "task": "ALFWorld game 853f0f6c\nYou are in the middle of a room. Looking quickly around you, you see a bed 2, a bed 1, a desk 1, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a safe 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: look at alarmclock under the desklamp."
+  },
+  {
+   "game": "valid_seen/look_at_obj_in_light-Bowl-None-DeskLamp-316/trial_T20190908_230702_962704/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_5ce171db07",
+   "task": "ALFWorld game 4054e2b9\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the bowl with the desklamp."
+  },
+  {
+   "game": "valid_seen/look_at_obj_in_light-Box-None-DeskLamp-205/trial_T20190907_074425_330493/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_43b4af69e5",
+   "task": "ALFWorld game d9a530c4\nYou are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a ottoman 1, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.\n\nYour task is to: look at box under the desklamp."
+  },
+  {
+   "game": "valid_seen/look_at_obj_in_light-KeyChain-None-DeskLamp-327/trial_T20190906_202601_548273/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_fec77c954f",
+   "task": "ALFWorld game 680406f3\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: examine the keychain with the desklamp."
+  },
+  {
+   "game": "valid_seen/pick_clean_then_place_in_recep-Ladle-None-CounterTop-8/trial_T20190909_121908_219603/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_808bc1be80",
+   "task": "ALFWorld game c532f7fe\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 4, a countertop 3, a countertop 2, a countertop 1, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean ladle in countertop."
+  },
+  {
+   "game": "valid_seen/pick_clean_then_place_in_recep-DishSponge-None-Cart-401/trial_T20190907_024634_972453/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_dadb03e9a1",
+   "task": "ALFWorld game a43290c9\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cart 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put a clean dishsponge in cart."
+  },
+  {
+   "game": "valid_seen/pick_clean_then_place_in_recep-Ladle-None-DiningTable-27/trial_T20190911_131350_027076/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_dab9bd6430",
+   "task": "ALFWorld game a9dbb16a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some ladle and put it in diningtable."
+  },
+  {
+   "game": "valid_seen/pick_clean_then_place_in_recep-Ladle-None-DiningTable-4/trial_T20190909_164840_568811/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_16b39b44a5",
+   "task": "ALFWorld game 09aff403\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some ladle and put it in diningtable."
+  },
+  {
+   "game": "valid_seen/pick_heat_then_place_in_recep-Plate-None-Cabinet-1/trial_T20190908_070946_578973/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_ab706e7a3d",
+   "task": "ALFWorld game fb0ddea1\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot plate in cabinet."
+  },
+  {
+   "game": "valid_seen/pick_heat_then_place_in_recep-Egg-None-Fridge-14/trial_T20190909_091314_636733/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_d5dc53999b",
+   "task": "ALFWorld game 9046364e\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot egg in fridge."
+  },
+  {
+   "game": "valid_seen/pick_heat_then_place_in_recep-Cup-None-Cabinet-22/trial_T20190907_173251_960848/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_7947984751",
+   "task": "ALFWorld game e78e341b\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot cup in cabinet."
+  },
+  {
+   "game": "valid_seen/pick_heat_then_place_in_recep-Tomato-None-Fridge-15/trial_T20190909_020200_054379/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_2cac8c2718",
+   "task": "ALFWorld game e6b5392a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some tomato and put it in fridge."
+  },
+  {
+   "game": "valid_seen/pick_cool_then_place_in_recep-Lettuce-None-CounterTop-11/trial_T20190908_222555_651605/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_d1e2db9fec",
+   "task": "ALFWorld game 556dd2a8\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool lettuce in countertop."
+  },
+  {
+   "game": "valid_seen/pick_cool_then_place_in_recep-Cup-None-SideTable-21/trial_T20190906_192823_237997/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_bb6b92a513",
+   "task": "ALFWorld game d65869f9\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 3, a diningtable 2, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool cup in sidetable."
+  },
+  {
+   "game": "valid_seen/pick_cool_then_place_in_recep-Lettuce-None-CounterTop-1/trial_T20190908_042713_075616/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_bf5fdd7380",
+   "task": "ALFWorld game 88bd105f\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some lettuce and put it in countertop."
+  },
+  {
+   "game": "valid_seen/pick_cool_then_place_in_recep-Cup-None-Microwave-17/trial_T20190906_192817_654400/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_ec3e21affa",
+   "task": "ALFWorld game f924d36d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool cup in microwave."
+  },
+  {
+   "game": "valid_seen/pick_two_obj_and_place-Pan-None-CounterTop-14/trial_T20190907_012519_974044/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_3d2b66e774",
+   "task": "ALFWorld game 74e1b43b\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: find two pan and put them in countertop."
+  },
+  {
+   "game": "valid_seen/pick_two_obj_and_place-Watch-None-Dresser-205/trial_T20190907_182211_592010/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_266080ae64",
+   "task": "ALFWorld game 6c5959e5\nYou are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a ottoman 1, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.\n\nYour task is to: put two watch in dresser."
+  },
+  {
+   "game": "valid_seen/pick_two_obj_and_place-RemoteControl-None-Ottoman-203/trial_T20190906_182952_858723/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_144ffd08b2",
+   "task": "ALFWorld game 32e09981\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a coffeetable 1, a diningtable 1, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a ottoman 1, a sidetable 1, and a sofa 1.\n\nYour task is to: find two remotecontrol and put them in ottoman."
+  },
+  {
+   "game": "valid_seen/pick_two_obj_and_place-TissueBox-None-Toilet-426/trial_T20190909_044602_338962/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_373b96ca27",
+   "task": "ALFWorld game 7eca9961\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a handtowelholder 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: find two tissuebox and put them in toilet."
+  }
+ ],
+ "probe": [
+  {
+   "game": "train/pick_and_place_simple-TissueBox-None-Toilet-426/trial_T20190909_043641_389014/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_bb8bf9939b",
+   "task": "ALFWorld game e6f10391\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a handtowelholder 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put a tissuebox in toilet."
+  },
+  {
+   "game": "train/pick_and_place_simple-HandTowel-None-CounterTop-416/trial_T20190909_045148_475019/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_b6f4ed1e7c",
+   "task": "ALFWorld game 0e9eaf28\nYou are in the middle of a room. Looking quickly around you, you see a countertop 1, a drawer 2, a drawer 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.\n\nYour task is to: put a handtowel in countertop."
+  },
+  {
+   "game": "train/pick_and_place_simple-CellPhone-None-Bed-322/trial_T20190907_163932_211569/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_c97993241d",
+   "task": "ALFWorld game 2158727f\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: put a cellphone in bed."
+  },
+  {
+   "game": "train/pick_and_place_simple-SprayBottle-None-GarbageCan-428/trial_T20190909_101535_306889/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_6350a51448",
+   "task": "ALFWorld game 721afee3\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.\n\nYour task is to: put a spraybottle in garbagecan."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Pencil-None-DeskLamp-303/trial_T20190909_064559_200594/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_6a90ad612e",
+   "task": "ALFWorld game 2ee1029b\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 12, a shelf 11, a shelf 10, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the pencil with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Bowl-None-DeskLamp-301/trial_T20190909_150737_210323/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_7bf0444e2b",
+   "task": "ALFWorld game 45ee0305\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: look at bowl under the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Statue-None-DeskLamp-319/trial_T20190907_035529_591053/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_a18cdc37aa",
+   "task": "ALFWorld game c73b04dd\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: examine the statue with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Pillow-None-DeskLamp-302/trial_T20190909_150929_316139/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_7d50bb2513",
+   "task": "ALFWorld game 27f18462\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a safe 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: look at pillow under the desklamp."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Tomato-None-Fridge-18/trial_T20190909_045941_566760/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_5099e14c20",
+   "task": "ALFWorld game c51cd93b\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a safe 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some tomato and put it in fridge."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Potato-None-Microwave-2/trial_T20190908_102004_349533/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_81d0532444",
+   "task": "ALFWorld game eb629936\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 6, a stoveburner 5, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean potato in microwave."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Lettuce-None-DiningTable-20/trial_T20190906_191212_598810/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_32015727d9",
+   "task": "ALFWorld game 700621de\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some lettuce and put it in diningtable."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-DishSponge-None-Shelf-401/trial_T20190908_072206_068474/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_0ff3fa60dc",
+   "task": "ALFWorld game d954f05e\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cart 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put a clean dishsponge in shelf."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Mug-None-SideTable-28/trial_T20190908_212726_073302/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_fa5c541a15",
+   "task": "ALFWorld game bfde888a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot mug in sidetable."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Tomato-None-CounterTop-27/trial_T20190906_204127_079628/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_9f074cdb84",
+   "task": "ALFWorld game 6990211e\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot tomato in countertop."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Plate-None-Shelf-7/trial_T20190906_193929_080179/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_0d7c0f74cc",
+   "task": "ALFWorld game 39946f1a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some plate and put it in shelf."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Tomato-None-CounterTop-26/trial_T20190907_005422_388983/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_0af9a5b84a",
+   "task": "ALFWorld game 23dd38a2\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot tomato in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Pot-None-Cabinet-27/trial_T20190908_131249_057435/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_1e8b41bd5f",
+   "task": "ALFWorld game 8cbfb87a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool pot in cabinet."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Plate-None-Cabinet-22/trial_T20190908_084019_408981/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_2298cb1b8c",
+   "task": "ALFWorld game bee580b6\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool plate in cabinet."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-16/trial_T20190908_184207_182636/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_259a7297ba",
+   "task": "ALFWorld game e4ac64bd\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 27, a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool mug in coffeemachine."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Mug-None-Shelf-20/trial_T20190908_121229_742996/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_bba65f85ed",
+   "task": "ALFWorld game beddbd8d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some mug and put it in shelf."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Pen-None-Dresser-318/trial_T20190912_171559_010465/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_e773d71f7b",
+   "task": "ALFWorld game 88831e07\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 2, a bed 1, a cabinet 1, a desk 2, a desk 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 2, a dresser 1, and a garbagecan 1.\n\nYour task is to: find two pen and put them in dresser."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Candle-None-Cabinet-402/trial_T20190909_084844_114031/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_54820ae455",
+   "task": "ALFWorld game 88318b25\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a shelf 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: find two candle and put them in cabinet."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-AlarmClock-None-Desk-316/trial_T20190911_000805_459094/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_8eefb50322",
+   "task": "ALFWorld game 617aa67b\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, and a sidetable 1.\n\nYour task is to: find two alarmclock and put them in desk."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Pen-None-SideTable-330/trial_T20190908_121048_491026/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_b461aa1280",
+   "task": "ALFWorld game ece194ac\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 1, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 2, a dresser 1, a garbagecan 1, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: find two pen and put them in sidetable."
+  }
+ ],
+ "learn_corpus": [
+  {
+   "game": "train/pick_and_place_simple-DishSponge-None-Toilet-403/trial_T20190907_192737_190036/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_cbfd4e7c3b",
+   "task": "ALFWorld game 8c014052\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 1, a shelf 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put some dishsponge on toilet."
+  },
+  {
+   "game": "train/pick_and_place_simple-KeyChain-None-ArmChair-214/trial_T20190909_061209_612904/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_73f8583393",
+   "task": "ALFWorld game c083baec\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a coffeetable 1, a garbagecan 1, a shelf 2, a shelf 1, a sidetable 1, a sofa 2, and a sofa 1.\n\nYour task is to: put a keychain in armchair."
+  },
+  {
+   "game": "train/pick_and_place_simple-Pencil-None-SideTable-322/trial_T20190908_112624_358795/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_b7de12e7d9",
+   "task": "ALFWorld game 46db287c\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: put a pencil in sidetable."
+  },
+  {
+   "game": "train/pick_and_place_simple-HandTowel-None-Cabinet-412/trial_T20190906_200550_674090/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_b0d37fe7ea",
+   "task": "ALFWorld game f4c482de\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.\n\nYour task is to: put some handtowel on cabinet."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Box-None-DeskLamp-224/trial_T20190908_105645_765201/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_3c9f1dbbe0",
+   "task": "ALFWorld game 76d1392b\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a cabinet 1, a drawer 21, a drawer 20, a drawer 19, a drawer 18, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 5, a sidetable 4, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.\n\nYour task is to: examine the box with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-AlarmClock-None-DeskLamp-309/trial_T20190908_062834_443450/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_fc7ad9ea71",
+   "task": "ALFWorld game ecc1118f\nYou are in the middle of a room. Looking quickly around you, you see a armchair 3, a armchair 2, a armchair 1, a bed 1, a cabinet 2, a cabinet 1, a desk 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a laundryhamper 1, a safe 1, and a sidetable 1.\n\nYour task is to: examine the alarmclock with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-CellPhone-None-DeskLamp-316/trial_T20190907_075501_181242/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_43db217f9f",
+   "task": "ALFWorld game 4401099e\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the cellphone with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Pillow-None-DeskLamp-218/trial_T20190909_043226_266806/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_bfaeb00fda",
+   "task": "ALFWorld game 720c1a49\nYou are in the middle of a room. Looking quickly around you, you see a coffeetable 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 2, a sidetable 1, and a sofa 1.\n\nYour task is to: look at pillow under the desklamp."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Pan-None-CounterTop-22/trial_T20190910_161415_317849/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_dfb171b477",
+   "task": "ALFWorld game 429659b0\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean pan in countertop."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Cloth-None-CounterTop-409/trial_T20190908_150707_250921/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_927964a8e1",
+   "task": "ALFWorld game a583b8c5\nYou are in the middle of a room. Looking quickly around you, you see a countertop 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: clean some cloth and put it in countertop."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Lettuce-None-Fridge-13/trial_T20190908_203315_375450/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_3d0ab84cc6",
+   "task": "ALFWorld game 198c8684\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some lettuce and put it in fridge."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Apple-None-DiningTable-19/trial_T20190907_230051_730842/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_164c80f6d1",
+   "task": "ALFWorld game d64324c5\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some apple and put it in diningtable."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Tomato-None-DiningTable-24/trial_T20190907_073329_394002/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_f67c349b3a",
+   "task": "ALFWorld game 59e2c784\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some tomato and put it in diningtable."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Plate-None-CounterTop-13/trial_T20190909_101054_898367/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_717fca4d7c",
+   "task": "ALFWorld game 772daf61\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot plate in countertop."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Potato-None-Fridge-2/trial_T20190909_030755_987481/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_8311e53a17",
+   "task": "ALFWorld game efc6f5a6\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 6, a stoveburner 5, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some potato and put it in fridge."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-18/trial_T20190909_081014_018811/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_3a4f121b5d",
+   "task": "ALFWorld game 268a8c28\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a safe 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some apple and put it in garbagecan."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Bread-None-CounterTop-17/trial_T20190907_150853_448489/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_8e2b115bda",
+   "task": "ALFWorld game cb71580d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some bread and put it in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Bread-None-CounterTop-15/trial_T20190909_085448_256298/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_9399bf757b",
+   "task": "ALFWorld game 32ba325d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool bread in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Apple-None-CounterTop-27/trial_T20190909_083734_958133/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_1c289b3b13",
+   "task": "ALFWorld game 8990f9e3\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some apple and put it in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Pot-None-Cabinet-5/trial_T20190906_235508_226899/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_a29518d3e5",
+   "task": "ALFWorld game 83f0f02c\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool pot in cabinet."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-KeyChain-None-Drawer-307/trial_T20190919_014613_455486/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_0bea187baf",
+   "task": "ALFWorld game 70a44646\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a laundryhamper 1, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: put two keychain in drawer."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Newspaper-None-ArmChair-216/trial_T20190907_074113_192109/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_a3c25e935f",
+   "task": "ALFWorld game 555e4898\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.\n\nYour task is to: put two newspaper in armchair."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-SaltShaker-None-Cabinet-3/trial_T20190908_102405_454935/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_aa30322c6e",
+   "task": "ALFWorld game c17db318\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put two saltshaker in cabinet."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-CreditCard-None-Dresser-311/trial_T20190907_201834_073281/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_80b4d9d239",
+   "task": "ALFWorld game eb2157a3\nYou are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a bed 1, a countertop 1, a diningtable 1, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a laundryhamper 1, and a sidetable 1.\n\nYour task is to: put two creditcard in dresser."
+  }
+ ],
+ "practice_pool": [
+  {
+   "game": "train/pick_and_place_simple-Pencil-None-SideTable-309/trial_T20190909_064559_662348/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_7f91157b54",
+   "task": "ALFWorld game 59b09848\nYou are in the middle of a room. Looking quickly around you, you see a armchair 3, a armchair 2, a armchair 1, a bed 1, a cabinet 2, a cabinet 1, a desk 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a laundryhamper 1, a safe 1, and a sidetable 1.\n\nYour task is to: put some pencil on sidetable."
+  },
+  {
+   "game": "train/pick_and_place_simple-Statue-None-CoffeeTable-228/trial_T20190906_185451_580211/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_3684593987",
+   "task": "ALFWorld game cdf4b505\nYou are in the middle of a room. Looking quickly around you, you see a coffeetable 1, a diningtable 1, a drawer 1, a garbagecan 1, a sidetable 2, a sidetable 1, a sofa 2, and a sofa 1.\n\nYour task is to: put a statue in coffeetable."
+  },
+  {
+   "game": "train/pick_and_place_simple-DishSponge-None-Cart-401/trial_T20190909_045712_019986/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_cae386366e",
+   "task": "ALFWorld game e3412ed4\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cart 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put a dishsponge in cart."
+  },
+  {
+   "game": "train/pick_and_place_simple-Book-None-Bed-312/trial_T20190908_103725_745160/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_6224b86fd0",
+   "task": "ALFWorld game b1ab1c2d\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: put some book on bed."
+  },
+  {
+   "game": "train/pick_and_place_simple-Newspaper-None-Sofa-211/trial_T20190906_174949_956681/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_80bd1b277d",
+   "task": "ALFWorld game 0ccbbcf1\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a coffeetable 1, a drawer 1, a garbagecan 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, a sidetable 1, a sofa 1, and a tvstand 1.\n\nYour task is to: put some newspaper on sofa."
+  },
+  {
+   "game": "train/pick_and_place_simple-SoapBottle-None-GarbageCan-421/trial_T20190908_045256_126150/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_55348d6bab",
+   "task": "ALFWorld game 38de00be\nYou are in the middle of a room. Looking quickly around you, you see a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a handtowelholder 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.\n\nYour task is to: put a soapbottle in garbagecan."
+  },
+  {
+   "game": "train/pick_and_place_simple-Glassbottle-None-Cabinet-17/trial_T20190906_182200_730638/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_2e76fa205c",
+   "task": "ALFWorld game 6e38ed5d\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a glassbottle in cabinet."
+  },
+  {
+   "game": "train/pick_and_place_simple-Egg-None-Fridge-7/trial_T20190906_164825_242073/game.tw-pddl",
+   "type": "pick_and_place_simple",
+   "task_id": "t_8a33793011",
+   "task": "ALFWorld game ec59eb65\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put some egg on fridge."
+  },
+  {
+   "game": "train/look_at_obj_in_light-CD-None-DeskLamp-319/trial_T20190909_114559_982060/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_a2cb5eccaf",
+   "task": "ALFWorld game d23a523d\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: look at cd under the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Mug-None-DeskLamp-301/trial_T20190908_155916_103990/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_03cbdb9b8b",
+   "task": "ALFWorld game 58b791b3\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: examine the mug with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Pillow-None-DeskLamp-306/trial_T20190909_075057_227880/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_3e3e13ccd3",
+   "task": "ALFWorld game 43d0577f\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a laundryhamper 1, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the pillow with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-AlarmClock-None-DeskLamp-303/trial_T20190908_145005_617119/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_6ac399ee30",
+   "task": "ALFWorld game 8b71c2f9\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 12, a shelf 11, a shelf 10, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the alarmclock with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Laptop-None-DeskLamp-301/trial_T20190907_185618_889790/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_c5ad4f9879",
+   "task": "ALFWorld game 41dfba28\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: examine the laptop with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Newspaper-None-DeskLamp-210/trial_T20190906_234500_634705/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_caeab2c4d1",
+   "task": "ALFWorld game ffb490c5\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a coffeetable 2, a coffeetable 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 2, a dresser 1, a garbagecan 1, a ottoman 1, and a sofa 1.\n\nYour task is to: examine the newspaper with the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-Book-None-DeskLamp-320/trial_T20190909_152301_888219/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_63c50da29c",
+   "task": "ALFWorld game 9af0e15d\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 2, a desk 1, a garbagecan 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, and a shelf 1.\n\nYour task is to: look at book under the desklamp."
+  },
+  {
+   "game": "train/look_at_obj_in_light-CD-None-DeskLamp-306/trial_T20190906_221709_218020/game.tw-pddl",
+   "type": "look_at_obj_in_light",
+   "task_id": "t_4bb606d6a3",
+   "task": "ALFWorld game 5a2c2ae8\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a laundryhamper 1, a shelf 1, and a sidetable 1.\n\nYour task is to: examine the cd with the desklamp."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Lettuce-None-GarbageCan-17/trial_T20190907_163810_199572/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_fd2253f5a9",
+   "task": "ALFWorld game 517fffc1\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean lettuce in garbagecan."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Knife-None-Drawer-21/trial_T20190908_141942_802018/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_9c3c5480c3",
+   "task": "ALFWorld game a460757a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 3, a diningtable 2, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean knife in drawer."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Spoon-None-DiningTable-21/trial_T20190908_064745_117580/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_e3eb0b2559",
+   "task": "ALFWorld game 6c842643\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 3, a diningtable 2, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a clean spoon in diningtable."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-ButterKnife-None-Drawer-2/trial_T20190908_044338_247760/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_b567c54c88",
+   "task": "ALFWorld game 31dce11b\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 6, a stoveburner 5, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some butterknife and put it in drawer."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-SoapBar-None-GarbageCan-420/trial_T20190906_201041_787997/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_009a923bb5",
+   "task": "ALFWorld game 33100a94\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a drawer 1, a garbagecan 1, a handtowelholder 1, a sidetable 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: put a clean soapbar in garbagecan."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-SoapBar-None-Cabinet-403/trial_T20190906_161918_796066/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_07540295e2",
+   "task": "ALFWorld game ebe1484a\nYou are in the middle of a room. Looking quickly around you, you see a bathtubbasin 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 1, a shelf 1, a sinkbasin 2, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, a towelholder 2, and a towelholder 1.\n\nYour task is to: clean some soapbar and put it in cabinet."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-Tomato-None-GarbageCan-15/trial_T20190908_190029_853407/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_51bd05ffde",
+   "task": "ALFWorld game 7a7abdc3\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some tomato and put it in garbagecan."
+  },
+  {
+   "game": "train/pick_clean_then_place_in_recep-ButterKnife-None-Drawer-30/trial_T20190908_051931_072703/game.tw-pddl",
+   "type": "pick_clean_then_place_in_recep",
+   "task_id": "t_ed7544a649",
+   "task": "ALFWorld game ab0dca83\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 4, a countertop 3, a countertop 2, a countertop 1, a drawer 27, a drawer 26, a drawer 25, a drawer 24, a drawer 23, a drawer 22, a drawer 21, a drawer 20, a drawer 19, a drawer 18, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: clean some butterknife and put it in drawer."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Mug-None-CoffeeMachine-13/trial_T20190908_185043_273617/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_1b4e3039df",
+   "task": "ALFWorld game 9abc901c\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some mug and put it in coffeemachine."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Egg-None-CounterTop-12/trial_T20190908_215527_416490/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_3ae328511a",
+   "task": "ALFWorld game 8b79dc8f\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some egg and put it in countertop."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Cup-None-SideTable-3/trial_T20190908_210949_409950/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_e158b99fc5",
+   "task": "ALFWorld game 8fd81b64\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some cup and put it in sidetable."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Cup-None-Cabinet-28/trial_T20190909_062858_196741/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_734ea20f4f",
+   "task": "ALFWorld game d403d904\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some cup and put it in cabinet."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Egg-None-GarbageCan-20/trial_T20190909_114005_885692/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_7c5e7d7107",
+   "task": "ALFWorld game b7e429aa\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot egg in garbagecan."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Cup-None-Shelf-1/trial_T20190906_230132_658755/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_097fe567cc",
+   "task": "ALFWorld game 1ebfcbc0\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some cup and put it in shelf."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Apple-None-GarbageCan-8/trial_T20190907_043118_286709/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_10f9d383aa",
+   "task": "ALFWorld game 0f121b8a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 4, a countertop 3, a countertop 2, a countertop 1, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: heat some apple and put it in garbagecan."
+  },
+  {
+   "game": "train/pick_heat_then_place_in_recep-Cup-None-CounterTop-17/trial_T20190908_130923_081236/game.tw-pddl",
+   "type": "pick_heat_then_place_in_recep",
+   "task_id": "t_34f40764f1",
+   "task": "ALFWorld game f8a7d422\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a hot cup in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Pot-None-StoveBurner-5/trial_T20190907_153222_495628/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_53879f3196",
+   "task": "ALFWorld game afb79e71\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool pot in stoveburner."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-24/trial_T20190907_185942_820847/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_33b9e638c5",
+   "task": "ALFWorld game c5895f71\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some mug and put it in coffeemachine."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Potato-None-GarbageCan-2/trial_T20190908_101621_422961/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_1e22392889",
+   "task": "ALFWorld game 52a05e6a\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 6, a stoveburner 5, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some potato and put it in garbagecan."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Bread-None-CounterTop-16/trial_T20190908_143948_082471/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_77f2c2b787",
+   "task": "ALFWorld game 72a7fd27\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 27, a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool bread in countertop."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Pan-None-StoveBurner-15/trial_T20190907_071217_746222/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_81645f79d8",
+   "task": "ALFWorld game a7c55359\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool pan in stoveburner."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Apple-None-GarbageCan-17/trial_T20190908_234317_973748/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_ab990c06e2",
+   "task": "ALFWorld game b0ce2042\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 2, a countertop 1, a diningtable 2, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put a cool apple in garbagecan."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Egg-None-SideTable-21/trial_T20190907_044013_708280/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_d420d70cf7",
+   "task": "ALFWorld game fd72c4ca\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 3, a diningtable 2, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some egg and put it in sidetable."
+  },
+  {
+   "game": "train/pick_cool_then_place_in_recep-Tomato-None-Microwave-6/trial_T20190908_082344_600536/game.tw-pddl",
+   "type": "pick_cool_then_place_in_recep",
+   "task_id": "t_eba8476ceb",
+   "task": "ALFWorld game 1bce9fd0\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 4, a countertop 3, a countertop 2, a countertop 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: cool some tomato and put it in microwave."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-SaltShaker-None-Cabinet-21/trial_T20190909_020743_399842/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_bc4493dca6",
+   "task": "ALFWorld game b9b9c4b5\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 1, a diningtable 3, a diningtable 2, a diningtable 1, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sidetable 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: put two saltshaker in cabinet."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-CellPhone-None-Safe-302/trial_T20190909_043450_502737/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_1e0b91dc9f",
+   "task": "ALFWorld game dfafe88e\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a safe 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: put two cellphone in safe."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-KeyChain-None-SideTable-326/trial_T20190908_160925_942963/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_83690e3d66",
+   "task": "ALFWorld game 122d079c\nYou are in the middle of a room. Looking quickly around you, you see a bed 2, a bed 1, a diningtable 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 14, a shelf 13, a shelf 12, a shelf 11, a shelf 10, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: put two keychain in sidetable."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-SprayBottle-None-GarbageCan-418/trial_T20190909_071533_543818/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_50ee83efbb",
+   "task": "ALFWorld game da5c079f\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 3, a cabinet 2, a cabinet 1, a countertop 1, a garbagecan 1, a handtowelholder 2, a handtowelholder 1, a sinkbasin 1, a toilet 1, a toiletpaperhanger 1, and a towelholder 1.\n\nYour task is to: put two spraybottle in garbagecan."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Book-None-DiningTable-329/trial_T20190909_002648_871253/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_afa27f35a7",
+   "task": "ALFWorld game 51fc08c2\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a sidetable 2, and a sidetable 1.\n\nYour task is to: find two book and put them in diningtable."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-KeyChain-None-Dresser-318/trial_T20190910_122758_510336/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_4048daef95",
+   "task": "ALFWorld game 4c44adc5\nYou are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 2, a bed 1, a cabinet 1, a desk 2, a desk 1, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 2, a dresser 1, and a garbagecan 1.\n\nYour task is to: put two keychain in dresser."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Ladle-None-Drawer-4/trial_T20190908_154838_594672/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_e70021d914",
+   "task": "ALFWorld game 4ad437ed\nYou are in the middle of a room. Looking quickly around you, you see a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a diningtable 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.\n\nYour task is to: find two ladle and put them in drawer."
+  },
+  {
+   "game": "train/pick_two_obj_and_place-Pencil-None-Desk-303/trial_T20190908_220248_075224/game.tw-pddl",
+   "type": "pick_two_obj_and_place",
+   "task_id": "t_561712196a",
+   "task": "ALFWorld game 86be9f35\nYou are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a shelf 12, a shelf 11, a shelf 10, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.\n\nYour task is to: find two pencil and put them in desk."
+  }
+ ]
+}

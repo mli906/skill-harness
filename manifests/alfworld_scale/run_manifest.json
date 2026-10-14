@@ -1,0 +1,169 @@
+{
+ "split": "manifests/alfworld_scale/split.json",
+ "corpora": {
+  "Q": {
+   "model": "openrouter/qwen/qwen-2.5-72b-instruct",
+   "success_failure": "25:23",
+   "n_traces": 48,
+   "sha256": "4dc1301b0a442a307fc58ba7f7ac02031c177f0605c63dd3b69ead6c7db7ae9a"
+  },
+  "M": {
+   "model": "openrouter/openai/gpt-4o-mini",
+   "success_failure": "15:33",
+   "n_traces": 48,
+   "sha256": "da5cc89c9579f2dbb81723795056d1da9f7e9d04bdf25007baaefe9417c8412f"
+  }
+ },
+ "practice": {
+  "Q": {
+   "model": "openrouter/qwen/qwen-2.5-72b-instruct",
+   "pool_pass_rate": 0.5625,
+   "selected_pass_rate": 0.5
+  },
+  "M": {
+   "model": "openrouter/openai/gpt-4o-mini",
+   "pool_pass_rate": 0.2708333333333333,
+   "selected_pass_rate": 0.2916666666666667
+  }
+ },
+ "skill_counts": {
+  "A_awm_bayesian": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_awm_non_regression": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_awm_noop": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_frozen_evoskill_bayesian": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_frozen_evoskill_non_regression": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_frozen_evoskill_noop": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_noskill_bayesian": {
+   "candidates": 0,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_noskill_non_regression": {
+   "candidates": 0,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_noskill_noop": {
+   "candidates": 0,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_raw_trace_rag_noop": {
+   "candidates": 48,
+   "library": 48,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_trace2skill_bayesian": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_trace2skill_non_regression": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "A_trace2skill_noop": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "25/48",
+   "probe_pass": "15/24"
+  },
+  "B_M_evoskill_bayesian": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "7/24",
+   "probe_pass": "7/24"
+  },
+  "B_M_evoskill_non_regression": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "7/24",
+   "probe_pass": "7/24"
+  },
+  "B_M_evoskill_noop": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "7/24",
+   "probe_pass": "7/24"
+  },
+  "B_Q_evoskill_bayesian": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "12/24",
+   "probe_pass": "15/24"
+  },
+  "B_Q_evoskill_non_regression": {
+   "candidates": 1,
+   "library": 0,
+   "learn_pass": "12/24",
+   "probe_pass": "15/24"
+  },
+  "B_Q_evoskill_noop": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "12/24",
+   "probe_pass": "15/24"
+  },
+  "T_Mcorpus_on_M": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "15/48",
+   "probe_pass": "7/24"
+  },
+  "T_Mcorpus_on_Q": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "15/48",
+   "probe_pass": "15/24"
+  },
+  "T_Qcorpus_on_M": {
+   "candidates": 1,
+   "library": 1,
+   "learn_pass": "25/48",
+   "probe_pass": "7/24"
+  },
+  "T_noskill_M": {
+   "candidates": 0,
+   "library": 0,
+   "learn_pass": "15/48",
+   "probe_pass": "7/24"
+  }
+ }
+}

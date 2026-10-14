@@ -1,0 +1,370 @@
+{
+ "model": "openrouter/openai/gpt-4o-mini",
+ "pool_n": 48,
+ "pool_pass_rate": 0.2708333333333333,
+ "selected_ids": [
+  "t_a2cb5eccaf",
+  "t_03cbdb9b8b",
+  "t_c5ad4f9879",
+  "t_caeab2c4d1",
+  "t_7f91157b54",
+  "t_cae386366e",
+  "t_3684593987",
+  "t_2e76fa205c",
+  "t_51bd05ffde",
+  "t_fd2253f5a9",
+  "t_9c3c5480c3",
+  "t_e3eb0b2559",
+  "t_53879f3196",
+  "t_33b9e638c5",
+  "t_1e22392889",
+  "t_77f2c2b787",
+  "t_734ea20f4f",
+  "t_1b4e3039df",
+  "t_3ae328511a",
+  "t_e158b99fc5",
+  "t_50ee83efbb",
+  "t_bc4493dca6",
+  "t_1e0b91dc9f",
+  "t_83690e3d66"
+ ],
+ "selected_pass_rate": 0.2916666666666667,
+ "rollouts": [
+  {
+   "task_id": "t_7f91157b54",
+   "type": "pick_and_place_simple",
+   "pass": true,
+   "steps": 5,
+   "tokens": 2783
+  },
+  {
+   "task_id": "t_3684593987",
+   "type": "pick_and_place_simple",
+   "pass": false,
+   "steps": 30,
+   "tokens": 18401
+  },
+  {
+   "task_id": "t_cae386366e",
+   "type": "pick_and_place_simple",
+   "pass": true,
+   "steps": 5,
+   "tokens": 2953
+  },
+  {
+   "task_id": "t_6224b86fd0",
+   "type": "pick_and_place_simple",
+   "pass": true,
+   "steps": 16,
+   "tokens": 9960
+  },
+  {
+   "task_id": "t_80bd1b277d",
+   "type": "pick_and_place_simple",
+   "pass": true,
+   "steps": 19,
+   "tokens": 12502
+  },
+  {
+   "task_id": "t_55348d6bab",
+   "type": "pick_and_place_simple",
+   "pass": true,
+   "steps": 8,
+   "tokens": 4635
+  },
+  {
+   "task_id": "t_2e76fa205c",
+   "type": "pick_and_place_simple",
+   "pass": false,
+   "steps": 30,
+   "tokens": 28561
+  },
+  {
+   "task_id": "t_8a33793011",
+   "type": "pick_and_place_simple",
+   "pass": false,
+   "steps": 30,
+   "tokens": 27092
+  },
+  {
+   "task_id": "t_a2cb5eccaf",
+   "type": "look_at_obj_in_light",
+   "pass": true,
+   "steps": 3,
+   "tokens": 2004
+  },
+  {
+   "task_id": "t_03cbdb9b8b",
+   "type": "look_at_obj_in_light",
+   "pass": true,
+   "steps": 24,
+   "tokens": 19267
+  },
+  {
+   "task_id": "t_3e3e13ccd3",
+   "type": "look_at_obj_in_light",
+   "pass": true,
+   "steps": 5,
+   "tokens": 2856
+  },
+  {
+   "task_id": "t_6ac399ee30",
+   "type": "look_at_obj_in_light",
+   "pass": true,
+   "steps": 15,
+   "tokens": 10617
+  },
+  {
+   "task_id": "t_c5ad4f9879",
+   "type": "look_at_obj_in_light",
+   "pass": false,
+   "steps": 30,
+   "tokens": 26786
+  },
+  {
+   "task_id": "t_caeab2c4d1",
+   "type": "look_at_obj_in_light",
+   "pass": false,
+   "steps": 30,
+   "tokens": 22176
+  },
+  {
+   "task_id": "t_63c50da29c",
+   "type": "look_at_obj_in_light",
+   "pass": false,
+   "steps": 30,
+   "tokens": 23187
+  },
+  {
+   "task_id": "t_4bb606d6a3",
+   "type": "look_at_obj_in_light",
+   "pass": true,
+   "steps": 3,
+   "tokens": 1514
+  },
+  {
+   "task_id": "t_fd2253f5a9",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 30408
+  },
+  {
+   "task_id": "t_9c3c5480c3",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 25008
+  },
+  {
+   "task_id": "t_e3eb0b2559",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 24476
+  },
+  {
+   "task_id": "t_b567c54c88",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 27575
+  },
+  {
+   "task_id": "t_009a923bb5",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 20975
+  },
+  {
+   "task_id": "t_07540295e2",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 19926
+  },
+  {
+   "task_id": "t_51bd05ffde",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": true,
+   "steps": 8,
+   "tokens": 5802
+  },
+  {
+   "task_id": "t_ed7544a649",
+   "type": "pick_clean_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 34405
+  },
+  {
+   "task_id": "t_1b4e3039df",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 33659
+  },
+  {
+   "task_id": "t_3ae328511a",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 28975
+  },
+  {
+   "task_id": "t_e158b99fc5",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 24668
+  },
+  {
+   "task_id": "t_734ea20f4f",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": true,
+   "steps": 20,
+   "tokens": 16329
+  },
+  {
+   "task_id": "t_7c5e7d7107",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 25663
+  },
+  {
+   "task_id": "t_097fe567cc",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 28151
+  },
+  {
+   "task_id": "t_10f9d383aa",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 30488
+  },
+  {
+   "task_id": "t_34f40764f1",
+   "type": "pick_heat_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 31140
+  },
+  {
+   "task_id": "t_53879f3196",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 28695
+  },
+  {
+   "task_id": "t_33b9e638c5",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 29943
+  },
+  {
+   "task_id": "t_1e22392889",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 29117
+  },
+  {
+   "task_id": "t_77f2c2b787",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 33973
+  },
+  {
+   "task_id": "t_81645f79d8",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 25627
+  },
+  {
+   "task_id": "t_ab990c06e2",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 31605
+  },
+  {
+   "task_id": "t_d420d70cf7",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 23372
+  },
+  {
+   "task_id": "t_eba8476ceb",
+   "type": "pick_cool_then_place_in_recep",
+   "pass": false,
+   "steps": 30,
+   "tokens": 29052
+  },
+  {
+   "task_id": "t_bc4493dca6",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 24184
+  },
+  {
+   "task_id": "t_1e0b91dc9f",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 20230
+  },
+  {
+   "task_id": "t_83690e3d66",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 22854
+  },
+  {
+   "task_id": "t_50ee83efbb",
+   "type": "pick_two_obj_and_place",
+   "pass": true,
+   "steps": 29,
+   "tokens": 19709
+  },
+  {
+   "task_id": "t_afa27f35a7",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 19348
+  },
+  {
+   "task_id": "t_4048daef95",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 20132
+  },
+  {
+   "task_id": "t_e70021d914",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 24471
+  },
+  {
+   "task_id": "t_561712196a",
+   "type": "pick_two_obj_and_place",
+   "pass": false,
+   "steps": 30,
+   "tokens": 23017
+  }
+ ]
+}
