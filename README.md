@@ -263,3 +263,31 @@ Learn traces are now Qwen's own (C2), so EvoSkill/raw-RAG learn from Qwen traces
 | raw-trace RAG (k=3) | 0.67 | 17.0 | 1 | 0 | 4 | 185,082 | 0 | 11 | 0.33 |
 
 Frozen-library auditability reads 0.0 because its provenance points at the old project, not this run's traces. n=6: smoke test, not a statistical result.
+
+## Enforced disjointness invariants (protocol hygiene)
+
+Every invariant below is a **hard error**, not a convention. All errors derive from
+`harness.splits.ProbeLeakError`.
+
+| # | Invariant | Enforced in | Error |
+|---|---|---|---|
+| 1 | `{learn_corpus, gepa_valset, gate_probe, test}` pairwise disjoint | `splits.check_disjoint` (runner, before any rollout); `scripts/scale_split.py` asserts it for the pinned scaled split | `ProbeLeakError` |
+| 2 | No learner reads/optimises on `gate_probe` (bound split, internal valset, GEPA induce) | `splits.guard_tasks`, `GEPALearner.bind_split/induce` | `ProbeLeakError` |
+| 3 | A frozen/transfer skill's **origin** task_ids are disjoint from `{gate_probe, test}` | `splits.check_frozen_origin` (`runner.run`, `c1_runner.run_c1`, `scripts/scale_run.py cell`), resolved **before** the run proceeds via `learner.origin_task_ids()` | `FrozenOriginLeakError` |
+| 4 | Corpus traces are train-only and disjoint from probe/test | `corpus.validate` (`train_only_ok`, `no_probe_leak`, `no_test_leak`) | `RuntimeError` (run refuses to start) |
+
+Notes on invariant 3:
+- A learner counts as frozen/transfer if it exposes `origin_task_ids()` or its registry name contains
+  `frozen` / `transfer`. A frozen learner without the method, or whose origin is unrecoverable
+  (`origin_unavailable`), also raises: disjointness that cannot be verified is treated as a violation.
+- `evoskill_frozen` recovers origin ids from the saved project (`.evoskill/origin_provenance.json`,
+  else `data/dataset.csv` uid column).
+- Origin of this check: the M3 skill `evoskill_context-recognition-skill_v1` was distilled from
+  t_f1750d1af9, t_5ce171db07, t_5d572fbd5d, t_b90a99fbeb; t_5ce171db07 was in the first scaled split's
+  24-task TEST set (train-on-test leakage in the frozen-EvoSkill cells). The scaled split is now
+  regenerated with `SCALE_SPLIT_EXCLUDE` (`manifests/alfworld_scale_clean/split.json`).
+
+Provenance states (runner `audit` event, governance check 1): **auditable** (lineage = this run's
+train/valset) and **external** (complete lineage from another corpus, declared by the learner,
+disjoint from this run's learn/probe/test) PASS; **unauditable** (held-out overlap, empty,
+placeholder, mixed) FAILS. `Scorecard.auditability` keeps its local-only meaning.

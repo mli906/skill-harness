@@ -14,7 +14,8 @@ import json, os, sys, urllib.request
 from dataclasses import asdict
 from pathlib import Path
 
-MAN = Path("manifests/alfworld_scale")
+MAN = Path(os.environ.get("SCALE_MANIFEST", "manifests/alfworld_scale"))
+OUT = Path(os.environ.get("SCALE_OUT", "logs/scale"))
 MODELS = {"Q": "openrouter/qwen/qwen-2.5-72b-instruct", "M": "openrouter/openai/gpt-4o-mini"}
 ROOT = Path(os.environ.get("ALFWORLD_DATA", Path.home() / ".cache" / "alfworld")) / "json_2.1.1"
 BUDGET = float(os.environ.get("SCALE_BUDGET_USD", 9.3))
@@ -101,7 +102,7 @@ def prefilter_cmd(m):
 
 
 def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
-    out = Path("logs/scale"); out.mkdir(parents=True, exist_ok=True)
+    out = OUT; out.mkdir(parents=True, exist_ok=True)
     resf = out / f"{name}.result.json"
     if resf.exists():
         print("skip", name); return
@@ -117,6 +118,8 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
     from harness.logging_utils import JsonlLogger
     from harness.runner import _eval
     from harness.seeding import task_id
+    from harness.provenance import audit_states
+    from harness.splits import check_frozen_origin, is_auditable
     from harness.types import RunConfig, Scorecard, SkillLibrary
     b, s = bench()
     cfg = RunConfig(learner=learner_name, gate=gate_name, representation=rep_name, benchmark="alfworld(scale split)",
@@ -134,7 +137,12 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
         os.environ["HARNESS_CORPUS_DIR"] = arg
         ctx.corpus_dir = arg
     learner = registry.build("learner", learner_name, ctx)
+    ctx.learner = learner
     gate = registry.build("gate", gate_name, ctx)
+    # invariant: frozen/transfer origin corpus disjoint from {probe, test} (hard error, before any rollout)
+    origin = check_frozen_origin(learner, {task_id(t) for t in probe}, {task_id(t) for t in test}, learner_name)
+    if origin is not None:
+        logger.log("frozen.origin", origin_task_ids=origin, disjoint_from_probe_test=True)
     agent, rep, kk = ctx.agent, ctx.representation, cfg.retrieval_k
     empty = SkillLibrary(skills=[])
     if kind == "c1":
@@ -173,7 +181,8 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
         logger.log("eval.task", task_id=a_.task_id, category=b.category(test[i]), with_lib=a_.outcome,
                    baseline=b_.outcome, failure_mode=a_.failure_mode, steps=len(a_.steps))
     lids = {t.task_id for t in learn_traces}; held = {task_id(t) for t in probe + test}
-    aud = [x for x in lib.skills if x.provenance and set(x.provenance) <= lids and not set(x.provenance) & held]
+    aud = [x for x in lib.skills if is_auditable(x, lids, held)]
+    logger.log("audit", **audit_states(lib.skills, lids, held, getattr(learner, "external_provenance", None)))
     sc = Scorecard(success_rate=sum(t.outcome for t in ev) / len(ev), avg_steps=sum(len(t.steps) for t in ev) / len(ev),
                    tokens_eval=sum(t.tokens for t in ev), tokens_build=int(learner.last_build_tokens) + int(gate.last_tokens),
                    flips_w2c=sum((not y.outcome) and x.outcome for x, y in zip(ev, base)),

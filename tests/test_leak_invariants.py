@@ -58,3 +58,19 @@ def test_future_frozen_learner_without_method_fails_loudly():
 def test_four_way_split_still_enforced():
     with pytest.raises(ProbeLeakError):
         check_disjoint(learn_corpus=["a"], gepa_valset=[], gate_probe=["b"], test=["a"])
+
+
+def test_b_clean_scaled_split_excludes_m3_origin_and_is_disjoint():
+    import json
+    from pathlib import Path
+    s = json.loads((Path(__file__).parent.parent / "manifests/alfworld_scale_clean/split.json").read_text())
+    S = {k: {e["task_id"] for e in s[k]} for k in ("test", "probe", "learn_corpus", "practice_pool")}
+    assert s["seed"] == 20261013 and len(S["test"]) == 24 and len(S["probe"]) == 24
+    assert not (S["test"] | S["probe"]) & set(M3_ORIGIN)
+    assert not set().union(*S.values()) & set(M3_ORIGIN)
+    # {learn, gepa_valset (empty in the scaled matrix: no GEPA cell), probe, test} pairwise disjoint
+    check_disjoint(learn_corpus=sorted(S["learn_corpus"]), gepa_valset=[], gate_probe=sorted(S["probe"]),
+                   test=sorted(S["test"]), practice_pool=sorted(S["practice_pool"]))
+    from collections import Counter
+    assert set(Counter(e["type"] for e in s["test"]).values()) == {4}
+    assert set(Counter(e["type"] for e in s["probe"]).values()) == {4}
