@@ -1,0 +1,33 @@
+{
+ "seed": 0,
+ "source": "learn_corpus",
+ "per_category": 2,
+ "gepa_valset_ids": [
+  "t_43db217f9f",
+  "t_bfaeb00fda",
+  "t_b0d37fe7ea",
+  "t_cbfd4e7c3b",
+  "t_927964a8e1",
+  "t_dfb171b477",
+  "t_1c289b3b13",
+  "t_9399bf757b",
+  "t_8311e53a17",
+  "t_f67c349b3a",
+  "t_0bea187baf",
+  "t_aa30322c6e"
+ ],
+ "gepa_train_ids": [
+  "t_3c9f1dbbe0",
+  "t_fc7ad9ea71",
+  "t_b7de12e7d9",
+  "t_73f8583393",
+  "t_164c80f6d1",
+  "t_3d0ab84cc6",
+  "t_a29518d3e5",
+  "t_8e2b115bda",
+  "t_3a4f121b5d",
+  "t_717fca4d7c",
+  "t_80b4d9d239",
+  "t_a3c25e935f"
+ ]
+}
