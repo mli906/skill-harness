@@ -5,7 +5,7 @@ OUT=logs/scale_clean_gepa; LOG=$OUT/gepa.out
 export PYTHONPATH=.:/workspace/skill-harness-gepa/.gepa-pkgs SCALE_MANIFEST=manifests/alfworld_scale_clean SCALE_OUT=$OUT
 export SCALE_BUDGET_USD=${SCALE_BUDGET_USD:-9.3} HARNESS_EMBEDDING=openai:text-embedding-3-small
 export GEPA_MAX_METRIC_CALLS=${GEPA_MAX_METRIC_CALLS:-80} GEPA_VALSET_PER_CATEGORY=2
-PY=/workspace/skill-harness/.venv/bin/python; HARDSTOP_USD=9.4; PGID=$(ps -o pgid= $$ | tr -d ' ')
+PY=${PY:-/workspace/skill-harness/.venv/bin/python}; [ -x "$PY" ] || { echo "$(date) ABORT: no python at $PY" >> $LOG; exit 1; }; HARDSTOP_USD=9.4; PGID=$(ps -o pgid= $$ | tr -d ' ')
 usage() { python3 -c "
 import json,os,urllib.request
 r=urllib.request.Request('https://openrouter.ai/api/v1/key',headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY']})
@@ -20,6 +20,7 @@ rm -f $OUT/A_gepa_bayesian.jsonl
 $PY scripts/scale_run.py cell A_gepa_bayesian gepa bayesian skill_md 3 Q c1:corpora/scale_Q >> $LOG 2>&1 || echo "FAIL A_gepa_bayesian" >> $LOG
 kill $WD 2>/dev/null
 echo "$(date) END usage=$(usage)" >> $LOG
+[ -f $OUT/A_gepa_bayesian.result.json ] || { echo "$(date) ABORT: no bayesian result, not committing" >> $LOG; exit 1; }
 mkdir -p reports/gepa_smoke_clean
 REPORT_OUT=reports/gepa_smoke_clean $PY scripts/scale_report.py >> $LOG 2>&1 || echo "REPORT FAIL" >> $LOG
 git add scripts/gepa_smoke_clean.sh scripts/gepa_bayes_relaunch.sh manifests/alfworld_scale_clean/gepa_valset.json reports/gepa_smoke_clean >> $LOG 2>&1

@@ -1240,3 +1240,13 @@ FAIL A_gepa_bayesian
 Wed Oct 14 13:46:18 EDT 2026 END usage=7.80990143
 scripts/gepa_bayes_relaunch.sh: line 24: /workspace/skill-harness/.venv/bin/python: No such file or directory
 REPORT FAIL
+[feat/gepa-live 9da39aa] GEPA live smoke (clean split): A_gepa_noop + A_gepa_bayesian results, summary report
+ 6 files changed, 1465 insertions(+)
+ create mode 100644 logs/scale_clean_gepa/A_gepa_noop.result.json
+ create mode 100644 logs/scale_clean_gepa/gepa.out
+ create mode 100644 logs/scale_clean_gepa/watchdog.out
+ create mode 100644 manifests/alfworld_scale_clean/gepa_valset.json
+ create mode 100644 scripts/gepa_bayes_relaunch.sh
+ create mode 100644 scripts/gepa_smoke_clean.sh
+To https://github.com/mli906/skill-harness.git
+   98ab062..9da39aa  feat/gepa-live -> feat/gepa-live
