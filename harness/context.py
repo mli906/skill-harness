@@ -16,3 +16,5 @@ class Context:
     representation: Any = None
     agent: Any = None
     task_lookup: dict = field(default_factory=dict)  # task_id -> task text
+    learner: Any = None   # set by the runner before the gate is built (governance check 1 reads
+                          # learner.external_provenance); not part of any plugin interface

@@ -187,3 +187,22 @@ def test_d2_bare_amount_passes_entity_proximate_rejects(banking):
     assert any("1810" in h for h in banking.pii_scan("balance 1810 for Emma Johnson"))
     far = "pay $5 " + " ".join(["word"] * 12) + " Emma"
     assert not any(h.startswith("amount") for h in banking.pii_scan(far))   # outside the window
+
+
+class _ExtLearner:
+    def __init__(self, ids): self.external_provenance = {i: {"origin_project": "p"} for i in ids}
+
+
+def test_c1_three_state_external_passes_leak_and_empty_fail(tmp_path):
+    g = gate(tmp_path, Contract())._with_learner(_ExtLearner(["ext", "ext_leak", "ext_empty"]))
+    ext = Skill("ext", "get_balance first", "skill_md", ["t_origin_elsewhere1", "t_origin_elsewhere2"], 1)
+    ext_leak = Skill("ext_leak", "get_balance first", "skill_md", ["t_origin_elsewhere1", task_id("test T")], 1)
+    ext_empty = Skill("ext_empty", "get_balance first", "skill_md", [], 1)
+    undeclared = Skill("undeclared", "get_balance first", "skill_md", ["t_origin_elsewhere1"], 1)
+    lib = g.admit([ext, ext_leak, ext_empty, undeclared], SkillLibrary([]), probe())
+    assert [s.id for s in lib.skills] == ["ext"]
+    rec = {r["candidate_id"]: r["checks"]["provenance"] for r in records(tmp_path)}
+    assert rec["ext"]["pass"] and rec["ext"]["state"] == "external" and rec["ext"]["auditability"] == 0.0
+    assert not rec["ext_leak"]["pass"] and rec["ext_leak"]["state"] == "unauditable"
+    assert rec["ext_leak"]["leaked_heldout"] == [task_id("test T")]
+    assert not rec["ext_empty"]["pass"] and not rec["undeclared"]["pass"]

@@ -1,6 +1,7 @@
 """run(cfg) -> Scorecard: the only thing a run invokes."""
 from __future__ import annotations
 import os
+from harness.provenance import audit_states
 import time
 from collections import defaultdict
 from harness import registry
@@ -8,7 +9,7 @@ from harness.context import Context
 from harness.llm import make_client, make_embedder
 from harness.logging_utils import JsonlLogger
 from harness.seeding import rng, task_id
-from harness.splits import carve_valset, check_disjoint, guard_tasks, is_auditable
+from harness.splits import carve_valset, check_disjoint, guard_tasks, is_auditable, check_frozen_origin
 from harness.types import RunConfig, Scorecard, SkillLibrary, Trace
 
 PROBE_PER_CATEGORY = 2
@@ -46,6 +47,7 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     train, test = ctx.benchmark.train_tasks(), ctx.benchmark.test_tasks()
     ctx.task_lookup.update({task_id(t): t for t in train + test})
     learner = registry.build("learner", cfg.learner, ctx)
+    ctx.learner = learner
     gate = registry.build("gate", cfg.gate, ctx)
     agent, rep, k = ctx.agent, ctx.representation, cfg.retrieval_k
     empty = SkillLibrary(skills=[])
@@ -59,6 +61,7 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
         learn_tasks, valset_tasks = carve_valset(ctx.benchmark, learn_tasks, cfg.seed)
     check_disjoint(learn_corpus=learn_tasks, gepa_valset=valset_tasks, gate_probe=probe_tasks, test=test)
     probe_ids = {task_id(t) for t in probe_tasks}
+    check_frozen_origin(learner, probe_ids, {task_id(t) for t in test}, cfg.learner)
     if hasattr(learner, "bind_split"):
         learner.bind_split(train=learn_tasks, valset=valset_tasks, forbidden_ids=probe_ids)
     guard_tasks(getattr(learner, "internal_valset", None) or [], probe_ids, f"learner {cfg.learner}")
@@ -89,7 +92,12 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     # gepa_valset is a training-side slice the learner legitimately optimised on.
     learner_ids = {t.task_id for t in learn_traces} | {task_id(t) for t in valset_tasks}
     heldout_ids = {task_id(t) for t in probe_tasks + test}
+    # Scorecard.auditability stays LOCAL (is_auditable; canonical semantics, M0 unchanged). The
+    # three-state audit event records auditable / external / unauditable; auditable OR external
+    # passes (traceable), unauditable (held-out overlap, placeholder, empty, mixed) fails.
     audited = [s for s in lib.skills if is_auditable(s, learner_ids, heldout_ids)]
+    logger.log("audit", **audit_states(lib.skills, learner_ids, heldout_ids,
+                                        getattr(learner, "external_provenance", None)))
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),

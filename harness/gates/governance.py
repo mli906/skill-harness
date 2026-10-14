@@ -3,7 +3,10 @@
 A candidate is ADMITTED iff all HARD checks pass (sequential; each admission becomes the new
 baseline for check 3, like the other gates). Every candidate gets an evidence record.
 
-  HARD 1 provenance  : auditability == 1.0 via the runner's predicate
+  HARD 1 provenance  : three-state (harness.provenance.classify): PASS if auditable (local
+                       lineage) OR external (complete lineage from another corpus, declared by
+                       the learner, disjoint from this run's learn/probe/test); FAIL if
+                       unauditable. Local auditability is still reported via the runner's predicate
                        (harness.splits.is_auditable). learner_ids = benchmark.train_tasks()
                        minus the probe (= learn corpus U gepa_valset in run()); heldout = probe
                        U benchmark.test_tasks().
@@ -46,6 +49,7 @@ from harness.gates.contracts import contract_for
 from harness.interfaces.gate import Gate
 from harness.registry import register
 from harness.seeding import derive_seed, task_id
+from harness.provenance import classify
 from harness.splits import is_auditable
 from harness.types import Trace, Skill, SkillLibrary
 
@@ -84,20 +88,28 @@ class GovernanceGate(Gate):
         self.task_lookup, self.llm, self.contract, self.seed = task_lookup, llm, contract, seed
         self.benchmark_name, self.logger = benchmark_name, logger
         self.evidence_path = evidence_path or _default_evidence_path()
+        self.learner = None   # set from ctx.learner (external-provenance declarations for check 1)
 
     @classmethod
     def from_context(cls, ctx):
         return cls(ctx.agent, ctx.representation, ctx.benchmark, ctx.cfg.retrieval_k, ctx.task_lookup,
                    ctx.llm, contract_for(ctx.cfg.benchmark, ctx.benchmark, ctx.logger), ctx.cfg.seed,
-                   ctx.cfg.benchmark, logger=ctx.logger)
+                   ctx.cfg.benchmark, logger=ctx.logger)._with_learner(getattr(ctx, "learner", None))
+
+    def _with_learner(self, learner):
+        self.learner = learner
+        return self
 
     # ---- checks -------------------------------------------------------------------------------
     def _provenance(self, cand: Skill, probe_tasks: list[str]) -> dict:
         heldout = {task_id(t) for t in probe_tasks + list(self.bench.test_tasks())}
         learner_ids = {task_id(t) for t in self.bench.train_tasks()} - heldout
-        ok = is_auditable(cand, learner_ids, heldout)
+        external = getattr(self.learner, "external_provenance", None) if self.learner is not None else None
+        state = classify(cand, learner_ids, heldout, external)
+        ok = state in ("auditable", "external")   # traceable passes; unauditable (leak / no lineage) fails
         prov = set(cand.provenance)
-        return {"pass": ok, "auditability": 1.0 if ok else 0.0, "n_provenance": len(prov),
+        return {"pass": ok, "state": state, "auditability": 1.0 if is_auditable(cand, learner_ids, heldout) else 0.0,
+                "n_provenance": len(prov),
                 "leaked_heldout": sorted(prov & heldout), "unknown_ids": sorted(prov - learner_ids - heldout)}
 
     def _advisory(self, cand: Skill) -> dict:
