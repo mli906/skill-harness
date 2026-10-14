@@ -3,6 +3,7 @@
 # Same config as the live scaled run: Qwen-72B consumer, OpenAI text-embedding-3-small, AWM_SUCCESS_ONLY=1,
 # 1 seed, raw_trace_rag noop only. Detached-safe: skip-if-done per cell; waits for the live run to exit;
 # OpenRouter hard stop at $HARDSTOP_USD (key usage, /api/v1/key) kills this process group.
+# AWM: no provider override (the live run's DeepInfra-ignore now leaves Qwen-72B with zero endpoints; AWM_SUCCESS_ONLY=1 already fits 32k).
 # Launch: setsid nohup bash scripts/trackA_clean.sh >/dev/null 2>&1 &
 set -u; cd "$(dirname "$0")/.."
 OUT=logs/scale_clean; LOG=$OUT/trackA.out; mkdir -p $OUT
@@ -30,7 +31,7 @@ cell() { [ -f $OUT/$1.result.json ] && { echo "skip $1" >> $LOG; return; }
   echo "$(date +%T) run $1" >> $LOG; $R "$@" >> $LOG 2>&1 || echo "FAIL $1" >> $LOG; }
 cell A_noskill_noop noskill noop skill_md 3 Q $QC
 ( for g in noop non_regression bayesian; do cell A_trace2skill_$g trace2skill $g skill_md 3 Q $QC; done ) &
-( for g in noop non_regression bayesian; do LLM_EXTRA_BODY='{"provider":{"ignore":["DeepInfra"]}}' cell A_awm_$g awm $g skill_md 3 Q $QC; done ) &
+( for g in noop non_regression bayesian; do cell A_awm_$g awm $g skill_md 3 Q $QC; done ) &
 ( for g in noop non_regression bayesian; do cell A_frozen_evoskill_$g evoskill_frozen $g skill_md 3 Q $QC; done ) &
 ( cell A_raw_trace_rag_noop raw_trace_rag noop raw_trace 3 Q $QC
   for g in non_regression bayesian; do cell A_noskill_$g noskill $g skill_md 3 Q $QC; done ) &
