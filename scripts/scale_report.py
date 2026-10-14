@@ -140,6 +140,9 @@ for mm in "QM":
         man["practice"][mm] = {"model": p["model"], "pool_pass_rate": p["pool_pass_rate"], "selected_pass_rate": p["selected_pass_rate"]}
 for n, r in sorted(R.items()):
     man["skill_counts"][n] = {"candidates": r["n_candidates"], "library": len(r["library"]), "learn_pass": r["learn_pass"], "probe_pass": r["probe_pass"]}
+_gv = MAN / "gepa_valset.json"
+if _gv.exists():
+    man["gepa_valset"] = json.loads(_gv.read_text())
 man["skipped"] = SKIPPED
 o += ["\n## Manifest\n", "```json", json.dumps(man, indent=1), "```"]
 DEST.mkdir(parents=True, exist_ok=True)

@@ -100,3 +100,24 @@ def check_frozen_origin(learner, probe_ids: set[str], test_ids: set[str], name: 
         raise FrozenOriginLeakError(f"frozen/transfer learner {name!r}: origin task_ids overlap "
                                     f"probe {bad_p} / test {bad_t}")
     return origin
+
+
+def bind_optimizer_split(bench, learner, learn: list[str], probe: list[str], test: list[str],
+                         seed: int, who: str = "learner") -> tuple[list[str], list[str]]:
+    """Pinned-split variant of the runner's gepa_valset logic (for the scaled/frozen runner).
+
+    Optimizer-style learners (``uses_valset = True``, i.e. GEPA) get a seeded, category-
+    stratified gepa_valset carved out of ``learn`` (carve_valset); everyone else gets
+    ``(learn, [])`` and is NOT bound (unchanged behaviour). Enforces {learn, gepa_valset,
+    gate_probe, test} pairwise disjoint and that the learner's train/valset never touch
+    gate_probe or test (ProbeLeakError)."""
+    if not getattr(learner, "uses_valset", False):
+        check_disjoint(learn_corpus=learn, gate_probe=probe, test=test)
+        return list(learn), []
+    keep, val = carve_valset(bench, learn, seed)
+    check_disjoint(learn_corpus=keep, gepa_valset=val, gate_probe=probe, test=test)
+    held = {task_id(t) for t in list(probe) + list(test)}
+    if hasattr(learner, "bind_split"):
+        learner.bind_split(train=keep, valset=val, forbidden_ids=held)
+    guard_tasks(getattr(learner, "internal_valset", None) or [], held, who)
+    return keep, val
