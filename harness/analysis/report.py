@@ -8,7 +8,7 @@ import math
 import os
 from collections import Counter, defaultdict
 
-from .parse import SCORE_FIELDS, TRACK_LABEL, TRACKS, load_evidence, load_runs
+from .parse import AUDIT_STATES, SCORE_FIELDS, audit_state, TRACK_LABEL, TRACKS, load_evidence, load_runs
 from .stats import bh_adjust, holm_adjust, mcnemar, mean_sd, paired_bootstrap
 
 KEY_FIELDS = ("benchmark", "track", "learner", "gate", "model", "variant")
@@ -36,6 +36,9 @@ def aggregate(runs):
         rs = sorted(groups[key], key=lambda r: r.seed)
         row = _kd(key)
         row["seeds"] = [r.seed for r in rs]
+        states = [audit_state(r) for r in rs]
+        row["audit_state"] = "/".join(sorted({st for st, _ in states}))
+        row["audit_basis"] = "; ".join(sorted({b for _, b in states}))
         row["n_seeds"] = len(rs)
         for f in SCORE_FIELDS:
             m, sd, n = mean_sd([r.scorecard.get(f) for r in rs])
@@ -218,6 +221,21 @@ def governance_summary(runs, evidence):
             "decisions": dict(decisions), "records": recs, "divergence": div, "n_records": len(recs)}
 
 
+def audit_summary(runs):
+    """Per-run three-state provenance: auditable / external (traceable, other corpus) / unauditable."""
+    rows = []
+    for r in sorted((r for r in runs if r.complete), key=lambda r: (r.key, r.seed)):
+        st, basis = audit_state(r)
+        a = r.audit or {}
+        rows.append({**_kd(r.key), "seed": r.seed, "audit_state": st, "basis": basis,
+                     "auditability_scorecard": (r.scorecard or {}).get("auditability"),
+                     "n_auditable": a.get("n_auditable"), "n_external": a.get("n_external"),
+                     "n_unauditable": a.get("n_unauditable"),
+                     "origin_source": (r.induce_stats or {}).get("origin_provenance_source")})
+    counts = {k: sum(1 for x in rows if x["audit_state"] == k) for k in AUDIT_STATES}
+    return {"runs": rows, "counts": counts}
+
+
 # ---------------------------------------------------------------- manifest
 def manifest(runs, expected=None):
     seeds = defaultdict(set)
@@ -283,7 +301,7 @@ def analyze(runs_dir, expected=None, B=10000, seed=20261013, alpha=0.05):
     return {"runs_dir": os.path.abspath(runs_dir), "n_runs": len(runs),
             "n_complete": sum(r.complete for r in runs), "aggregate": agg, "comparisons": comps,
             "flips": flip_summary(runs, comps), "pareto": pareto_rows,
-            "governance": governance_summary(runs, evidence), "manifest": manifest(runs, expected),
+            "governance": governance_summary(runs, evidence), "audit": audit_summary(runs), "manifest": manifest(runs, expected),
             "parse_issues": issues, "parse_notes": notes,
             "params": {"B": B, "seed": seed, "alpha": alpha}}
 
@@ -296,6 +314,9 @@ def _f(x, nd=3):
             return "—"
         return f"{x:.{nd}f}" if abs(x) < 1000 else f"{x:,.0f}"
     return str(x)
+
+
+_AUDIT_LABEL = {"auditable": "auditable", "external": "traceable (external corpus)", "unauditable": "unauditable"}
 
 
 def _ms(r, f):
@@ -361,12 +382,13 @@ def write_outputs(res, out):
     _write_csv(os.path.join(out, "governance_divergence.csv"), res["governance"]["divergence"])
     _write_csv(os.path.join(out, "governance_records.csv"), res["governance"]["records"])
     _write_csv(os.path.join(out, "manifest_missing.csv"), res["manifest"]["missing"])
+    _write_csv(os.path.join(out, "audit_states.csv"), res["audit"]["runs"])
     plots, plot_note = _plots(res, out)
     L = [f"# Results analysis", "", f"Runs dir: `{res['runs_dir']}` — {res['n_runs']} runs parsed, "
          f"{res['n_complete']} complete. Bootstrap B={res['params']['B']}, seed={res['params']['seed']}, "
          f"alpha={res['params']['alpha']}.", ""]
     L.append("## 1. Comparison tables (one per track; never merged)\n")
-    cols = ["config", "seeds"] + list(SCORE_FIELDS)
+    cols = ["config", "seeds"] + list(SCORE_FIELDS) + ["audit state"]
     for t in list(TRACKS) + ["unassigned"]:
         sub = [r for r in res["aggregate"] if r["track"] == t]
         if not sub:
@@ -374,7 +396,7 @@ def write_outputs(res, out):
         for b in sorted({r["benchmark"] for r in sub}):
             L.append(f"### {TRACK_LABEL[t]} — {b}\n")
             L.append(_md_table(cols, [[_label(tuple(r[k] for k in KEY_FIELDS)), r["n_seeds"]] +
-                                      [_ms(r, f) for f in SCORE_FIELDS] for r in sub if r["benchmark"] == b]))
+                                      [_ms(r, f) for f in SCORE_FIELDS] + [_AUDIT_LABEL.get(r["audit_state"], r["audit_state"])] for r in sub if r["benchmark"] == b]))
             L.append("")
     L.append("## 2. Paired significance (McNemar exact + paired bootstrap; BH-FDR and Holm across the family)\n")
     if res["comparisons"]:
@@ -434,6 +456,19 @@ def write_outputs(res, out):
             L.append("_No governance-rejected candidate appears in a noop library._")
     else:
         L.append("_No governance evidence logs found._")
+    au = res["audit"]
+    L.append("\n### Provenance / auditability states\n")
+    L.append("auditable = lineage is this run's own train/valset traces; traceable (external corpus) = complete "
+             "lineage from a different run/corpus (Scorecard.auditability reads 0 for these by design); "
+             "unauditable = empty/placeholder/mixed provenance or a held-out (probe/test) id.\n")
+    L.append("Counts: " + ", ".join(f"{_AUDIT_LABEL[k]}: {v}" for k, v in au["counts"].items()) + "\n")
+    L.append(_md_table(["track", "config", "seed", "state", "basis", "scorecard auditability", "aud/ext/unaud",
+                        "origin source"],
+                       [[x["track"], _label(tuple(x[k] for k in KEY_FIELDS)), x["seed"],
+                         _AUDIT_LABEL.get(x["audit_state"], x["audit_state"]), x["basis"],
+                         _f(x["auditability_scorecard"]),
+                         f"{_f(x['n_auditable'])}/{_f(x['n_external'])}/{_f(x['n_unauditable'])}",
+                         x["origin_source"] or "—"] for x in au["runs"]]))
     m = res["manifest"]
     L.append("\n## 6. Run manifest\n")
     L.append(f"Expected cells: {m['expected_source']}.\n")

@@ -41,6 +41,8 @@ class Run:
     baseline_unauthorized: float | None = None
     complete: bool = False
     ts: float = 0.0
+    audit: dict | None = None          # runner 'audit' event (three-state provenance)
+    induce_stats: dict | None = None
     notes: list = field(default_factory=list)
 
     @property
@@ -121,7 +123,10 @@ def _finish(run: Run, recs: list):
         elif ev == "gate.result":
             run.library = list(r.get("library") or [])
             run.gate_rejections = r.get("rejections")
+        elif ev == "audit":
+            run.audit = {k: v for k, v in r.items() if k not in ("ts", "event")}
         elif ev == "learner.induce":
+            run.induce_stats = r.get("stats") if isinstance(r.get("stats"), dict) else None
             run.candidate_ids = list(r.get("skill_ids") or run.candidate_ids)
         elif ev == "eval.task":
             run.tasks.append(r)
@@ -246,3 +251,36 @@ def dedupe(runs, issues):
         else:
             issues.append(f"duplicate run for {k[0]} seed {k[1]}: kept {cur.file}, dropped {r.file}")
     return [r for r in runs if best[(r.key, r.seed)] is r]
+
+
+AUDIT_STATES = ("auditable", "external", "unauditable")
+
+
+def audit_state(run: Run) -> tuple[str, str]:
+    """(state, basis) for a run's admitted library.
+
+    * runner ``audit`` event present: auditable if every skill is auditable,
+      external if some are external and none unauditable, else unauditable;
+    * else (older logs): learner stats ``external_provenance: true`` with local
+      auditability < 1 -> ``external`` (unverified: no held-out check logged);
+      otherwise from Scorecard.auditability (1.0 -> auditable, else unauditable).
+    An empty library reads auditable (Scorecard convention), basis notes it.
+    """
+    a = run.audit
+    if a is not None:
+        if not a.get("n_skills"):
+            return "auditable", "audit event (empty library)"
+        if a.get("n_unauditable"):
+            return "unauditable", "audit event"
+        if a.get("n_external"):
+            return "external", "audit event"
+        return "auditable", "audit event"
+    sc = run.scorecard or {}
+    aud = sc.get("auditability")
+    if sc.get("library_size") == 0:
+        return "auditable", "scorecard (empty library)"
+    if (run.induce_stats or {}).get("external_provenance") is True and (aud is None or aud < 1.0):
+        return "external", "learner stats (unverified: no audit event)"
+    if aud is None:
+        return "unknown", "no auditability logged"
+    return ("auditable" if aud >= 1.0 else "unauditable"), "scorecard auditability"

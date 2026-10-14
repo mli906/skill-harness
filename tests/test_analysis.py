@@ -195,3 +195,45 @@ def test_cli_deterministic(logs, tmp_path):
     strip = lambda s: s.replace(str(o1), "X").replace(str(o2), "X")
     for name in ("results.json", "report.md", "comparisons.csv", "aggregate.csv", "flips.csv", "pareto.csv"):
         assert strip((o1 / name).read_text()) == strip((o2 / name).read_text()), name
+
+
+def _append(path, rec):
+    with open(path, "a") as f:
+        f.write(json.dumps(rec) + "\n")
+
+
+def _insert_before_end(path, rec):
+    lines = open(path).read().splitlines()
+    lines.insert(len(lines) - 1, json.dumps(rec))
+    open(path, "w").write("\n".join(lines) + "\n")
+
+
+def test_three_audit_states_reported_distinctly(tmp_path):
+    d = tmp_path / "aud"
+    d.mkdir()
+    mk = lambda n, aud, ext, un: {"event": "audit", "n_skills": aud + ext + un, "n_auditable": aud,
+                                  "n_external": ext, "n_unauditable": un, "per_skill": []}
+    _write_run(d / "A_local.jsonl", "trace2skill", "noop", 0, S0, track="frozen_corpus")
+    _insert_before_end(d / "A_local.jsonl", mk("a", 1, 0, 0))
+    _write_run(d / "T_ext.jsonl", "evoskill_frozen", "noop", 0, S0, track="transfer",
+               extra_score={"auditability": 0.0})
+    _insert_before_end(d / "T_ext.jsonl", mk("e", 0, 1, 0))
+    _write_run(d / "A_bad.jsonl", "evoskill_frozen", "noop", 0, S0, track="frozen_corpus",
+               extra_score={"auditability": 0.0})
+    _insert_before_end(d / "A_bad.jsonl", mk("u", 0, 0, 1))
+    # legacy log without audit event, learner stats flag external
+    _write_run(d / "T_legacy.jsonl", "evoskill_frozen", "bayesian", 0, S0, track="transfer",
+               extra_score={"auditability": 0.0})
+    _insert_before_end(d / "T_legacy.jsonl", {"event": "learner.induce", "stats": {"external_provenance": True}})
+    res = analyze(str(d), B=200)
+    st = {(r["track"], r["learner"], r["gate"]): (r["audit_state"], r["basis"]) for r in res["audit"]["runs"]}
+    assert st[("frozen_corpus", "trace2skill", "noop")][0] == "auditable"
+    assert st[("transfer", "evoskill_frozen", "noop")] == ("external", "audit event")
+    assert st[("frozen_corpus", "evoskill_frozen", "noop")][0] == "unauditable"
+    assert st[("transfer", "evoskill_frozen", "bayesian")][0] == "external"
+    assert "unverified" in st[("transfer", "evoskill_frozen", "bayesian")][1]
+    assert res["audit"]["counts"] == {"auditable": 1, "external": 2, "unauditable": 1}
+    agg = {(r["track"], r["learner"], r["gate"]): r for r in res["aggregate"]}
+    assert agg[("transfer", "evoskill_frozen", "noop")]["audit_state"] == "external"
+    rep = open(write_outputs(res, str(tmp_path / "o"))).read()
+    assert "traceable (external corpus)" in rep and "unauditable" in rep
