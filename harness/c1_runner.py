@@ -11,6 +11,7 @@ and are not guarded (they run their own rollouts).
 """
 from __future__ import annotations
 import os
+from harness.provenance import audit_states
 import time
 from harness import registry, corpus
 from harness.context import Context
@@ -66,6 +67,8 @@ def run_c1(cfg: RunConfig, corpus_dir: str, log_path: str | None = None) -> Scor
     heldout_ids = {task_id(t) for t in probe_tasks + test}
     audited = [s for s in lib.skills if s.provenance
                and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
+    logger.log("audit", **audit_states(lib.skills, learner_ids, heldout_ids,
+                                        getattr(learner, "external_provenance", None)))
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),

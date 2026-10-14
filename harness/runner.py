@@ -1,6 +1,7 @@
 """run(cfg) -> Scorecard: the only thing a run invokes."""
 from __future__ import annotations
 import os
+from harness.provenance import audit_states
 import time
 from collections import defaultdict
 from harness import registry
@@ -76,6 +77,8 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     heldout_ids = {task_id(t) for t in probe_tasks + test}
     audited = [s for s in lib.skills if s.provenance
                and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
+    logger.log("audit", **audit_states(lib.skills, learner_ids, heldout_ids,
+                                        getattr(learner, "external_provenance", None)))
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),
