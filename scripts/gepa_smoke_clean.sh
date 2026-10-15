@@ -5,10 +5,10 @@
 # Launch: setsid nohup bash scripts/gepa_smoke_clean.sh >/dev/null 2>&1 &
 set -u; cd "$(dirname "$0")/.."
 OUT=logs/scale_clean_gepa; LOG=$OUT/gepa.out; mkdir -p $OUT
-export PYTHONPATH=.:/workspace/skill-harness-gepa/.gepa-pkgs SCALE_MANIFEST=manifests/alfworld_scale_clean SCALE_OUT=$OUT
+export PYTHONPATH=.${PYTHONPATH:+:$PYTHONPATH} SCALE_MANIFEST=manifests/alfworld_scale_clean SCALE_OUT=$OUT
 export SCALE_BUDGET_USD=${SCALE_BUDGET_USD:-8.3} HARNESS_EMBEDDING=openai:text-embedding-3-small
 export GEPA_MAX_METRIC_CALLS=${GEPA_MAX_METRIC_CALLS:-80} GEPA_VALSET_PER_CATEGORY=2
-PY=${PY:-/workspace/skill-harness/.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-8.5}; PGID=$(ps -o pgid= $$ | tr -d ' ')
+PY=${PY:-.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-8.5}; PGID=$(ps -o pgid= $$ | tr -d ' ')
 usage() { python3 -c "
 import json,os,urllib.request
 r=urllib.request.Request('https://openrouter.ai/api/v1/key',headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY']})

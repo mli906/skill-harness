@@ -6,7 +6,7 @@ learner produced. Wrapped: the harness Trace2SkillLearner output. Compares
 structure (skill dir files, SKILL.md frontmatter, quick_validate verdict,
 section counts) -- not text, since the LLM output is sampled.
 
-    python scripts/validate_trace2skill.py --wrapped-work logs/trace2skill/<key> --python /workspace/.t2s_venv/bin/python
+    python scripts/validate_trace2skill.py --wrapped-work logs/trace2skill/<key> --python <path-to-trace2skill-venv>/bin/python
 """
 import argparse
 import json
