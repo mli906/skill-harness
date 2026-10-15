@@ -48,6 +48,8 @@ else
   if command -v uv >/dev/null; then uv venv -q --python "$PYTHON" "$VENV"; else "$PYTHON" -m venv "$VENV" || die "python venv module missing (apt: python3.13-venv)"; fi
 fi
 
+# fast-downward-textworld's sdist build calls a bare `python`; put the venv first on PATH (a bare box may have only python3).
+export PATH="$VENV/bin:$PATH"
 say "3/5 install requirements.lock (pinned; evoskill is a git pin and needs github.com)"
 if command -v uv >/dev/null; then uv pip install -q --python "$VENV/bin/python" -r requirements.lock
 else "$VENV/bin/python" -m pip install -q -r requirements.lock; fi
