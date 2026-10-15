@@ -1,0 +1,40 @@
+{
+ "name": "A_gepa_noop",
+ "config": {
+  "learner": "gepa",
+  "gate": "noop",
+  "representation": "skill_md",
+  "benchmark": "alfworld(scale split)",
+  "base_model": "openrouter/qwen/qwen-2.5-72b-instruct",
+  "seed": 0,
+  "retrieval_k": 3
+ },
+ "source": "c1:corpora/scale_Q",
+ "n_seeds": 1,
+ "scorecard": {
+  "success_rate": 0.4583333333333333,
+  "avg_steps": 20.958333333333332,
+  "tokens_eval": 469634,
+  "tokens_build": 1720029,
+  "flips_w2c": 2,
+  "flips_c2w": 2,
+  "library_size": 1,
+  "auditability": 1.0,
+  "unauthorized_actions": 39,
+  "promotion_rejections": 0
+ },
+ "baseline_success_rate": 0.4583333333333333,
+ "n_candidates": 1,
+ "candidate_ids": [
+  "gepa_skill_v1"
+ ],
+ "library": [
+  "gepa_skill_v1"
+ ],
+ "learner_build_tokens": 1720029,
+ "gate_tokens": 0,
+ "learn_pass": "25/48",
+ "probe_pass": "15/24",
+ "learner_stats": null,
+ "openrouter_usage_at_start": 6.60718875
+}

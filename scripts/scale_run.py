@@ -119,7 +119,7 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
     from harness.runner import _eval
     from harness.seeding import task_id
     from harness.provenance import audit_states
-    from harness.splits import check_frozen_origin, is_auditable
+    from harness.splits import bind_optimizer_split, check_frozen_origin, is_auditable
     from harness.types import RunConfig, Scorecard, SkillLibrary
     b, s = bench()
     cfg = RunConfig(learner=learner_name, gate=gate_name, representation=rep_name, benchmark="alfworld(scale split)",
@@ -141,6 +141,18 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
     gate = registry.build("gate", gate_name, ctx)
     # invariant: frozen/transfer origin corpus disjoint from {probe, test} (hard error, before any rollout)
     origin = check_frozen_origin(learner, {task_id(t) for t in probe}, {task_id(t) for t in test}, learner_name)
+    # optimizer-style learners (GEPA): seeded gepa_valset carved from the learn corpus; others unchanged
+    opt_train, valset = bind_optimizer_split(b, learner, s["learn_corpus"], probe, test, cfg.seed, learner_name)
+    if valset:
+        vrec = {"seed": cfg.seed, "source": "learn_corpus", "per_category": int(os.environ.get("GEPA_VALSET_PER_CATEGORY", 2)),
+                "gepa_valset_ids": [task_id(t) for t in valset], "gepa_train_ids": [task_id(t) for t in opt_train]}
+        vp = MAN / "gepa_valset.json"
+        if vp.exists():
+            if json.loads(vp.read_text())["gepa_valset_ids"] != vrec["gepa_valset_ids"]:
+                raise RuntimeError(f"gepa_valset carve differs from pinned {vp}")
+        else:
+            vp.write_text(json.dumps(vrec, indent=1))
+        logger.log("gepa_valset", **vrec)
     if origin is not None:
         logger.log("frozen.origin", origin_task_ids=origin, disjoint_from_probe_test=True)
     agent, rep, kk = ctx.agent, ctx.representation, cfg.retrieval_k
@@ -159,7 +171,10 @@ def cell_cmd(name, learner_name, gate_name, rep_name, k, m, src):
         learn_traces = _eval(agent, rep, kk, learn_tasks, empty)
         learn_ids = learn_tasks
     probe_traces = _eval(agent, rep, kk, probe, empty)
-    logger.log("split", learn_tasks=learn_ids, probe_tasks=probe, test_tasks=test)
+    if valset:
+        logger.log("split", learn_tasks=learn_ids, gepa_valset=valset, probe_tasks=probe, test_tasks=test)
+    else:
+        logger.log("split", learn_tasks=learn_ids, probe_tasks=probe, test_tasks=test)
     logger.log("train.traces", n_learn=len(learn_traces), n_probe=len(probe_traces),
                learn_pass=sum(t.outcome for t in learn_traces), probe_pass=sum(t.outcome for t in probe_traces))
     induce_traces = learn_traces
