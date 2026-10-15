@@ -41,5 +41,9 @@ M0 expected values (trivial learner, synthetic benchmark, stub model, seed 0): s
 | Re-derive splits | `python scripts/scale_split.py` (pinned in `manifests/`; do not regenerate for comparable results) | ALFWorld data |
 Caveats: the launchers hard-stop on OpenRouter key usage (a global key counter, not per-run); `trackA_clean.sh` first waits for any other `scale_run.py cell` process; hardcoded values (embedding model, EvoSkill build settings) are listed in CONFIG.md section 8.
 
-## Verified vs not verified (this packaging pass)
-Verified: lock installs into a fresh venv (283 packages, `pip check` clean), `make smoke` in a fresh checkout/venv with an empty `$HOME`; bootstrap steps 1-4 (see the report for the exact run). Not verified: any real model call, a scaled run, Python != 3.13, a machine without `g++`/network, RockAI itself.
+## Verified vs not verified (packaging pass, 2026-10-15)
+Verified, each from a fresh `git clone` of this branch with an empty `$HOME` and `env -i` (no API keys, no PYTHONPATH):
+* `./bootstrap.sh` end-to-end with `uv` (new venv; 283 pinned packages incl. building `fast-downward-textworld` from source; the 4 external repos cloned and HEAD==pin asserted; full ALFWorld download: train=3553, valid_seen=140, valid_unseen=134 game files, identical file list and `valid_seen` content md5 to the dev box's `~/.cache/alfworld`; ALFWorldAdapter built and reset games on it). Re-run is idempotent.
+* `./bootstrap.sh` without `uv` (stdlib `venv` + pip, `PATH=/usr/bin:/bin`): installs the same lock (found + fixed a bare-`python` PATH problem in the sdist build).
+* `make smoke` in both fresh venvs: M0 scorecards reproduced exactly; pytest **137 passed, 1 xfailed**. `pip freeze` of the fresh venv == `requirements.lock` (0 differences, apart from pip itself in the non-uv venv).
+Not verified: any real model call, a scaled run, Python other than 3.13.5, a machine with no `g++`/`make` or no network (bootstrap only detects/reports these), the actual RockAI platform, OfficeQA HF download (needs `HF_TOKEN`).
