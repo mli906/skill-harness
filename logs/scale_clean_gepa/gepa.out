@@ -1250,3 +1250,386 @@ REPORT FAIL
  create mode 100644 scripts/gepa_smoke_clean.sh
 To https://github.com/mli906/skill-harness.git
    98ab062..9da39aa  feat/gepa-live -> feat/gepa-live
+Wed Oct 14 13:57:06 EDT 2026 relaunch A_gepa_bayesian pid=14876 pgid=14876 usage=7.80990143
+Iteration 0: Base program full valset score: 0.5833333333333334 over 12 / 12 examples
+Iteration 1: Selected program 0 score: 0.5833333333333334
+Iteration 1: Proposed new text for skill_md: ## solve_household_task
+Given an ALFWorld household task, this workflow finds the object, completes the goal, and ensures the task is solved efficiently and correctly.
+
+### Input Format
+- **Game ID**: Unique identifier for the ALFWorld game.
+- **Room Description**: A list of objects and receptacles in the room.
+- **Task**: A specific task to be completed, such as "examine the alarmclock with the desklamp" or "put two creditcard in dresser."
+
+### Task Description
+- **Objective**: Complete the given task by finding the required objects and performing the necessary actions.
+- **Receptacles**: Objects can be found in various receptacles such as cabinets, drawers, countertops, etc.
+- **Actions**:
+  - **Go to**: Move to a specific receptacle.
+  - **Take**: Pick up an object from a receptacle.
+  - **Put**: Place an object in or on a receptacle.
+  - **Use**: Activate or examine an object.
+  - **Open**: Open a closed receptacle to check its contents.
+
+### Generalizable Strategy
+1. **Identify the Object and Target Receptacle**:
+   - Parse the task to determine the object and the target receptacle.
+2. **Locate the Object**:
+   - Move to each receptacle in the room and check its contents.
+   - If the object is not found, continue to the next receptacle.
+3. **Take the Object**:
+   - Once the object is found, pick it up.
+4. **Locate the Target Receptacle**:
+   - Move to the target receptacle.
+5. **Complete the Task**:
+   - Place the object in or on the target receptacle.
+   - If the task involves using an object, activate or examine it as required.
+
+### Niche and Domain Specific Factual Information
+- **Receptacles**:
+  - Some receptacles may be closed and need to be opened to check their contents.
+  - Objects can be found in multiple receptacles, so it's important to check all possible locations.
+- **Object Interaction**:
+  - Ensure the object is correctly picked up and placed.
+  - Some tasks may require multiple objects or actions.
+- **Efficiency**:
+  - Avoid unnecessary movements and actions to complete the task within the step limit.
+- **Verification**:
+  - Ensure the task is completed successfully and the verifier accepts the final output.
+
+### Example Task
+- **Task**: "put a hot plate in countertop."
+- **Steps**:
+  1. Identify the object (hot plate) and the target receptacle (countertop).
+  2. Move to each receptacle and check for the hot plate.
+  3. Once found, pick up the hot plate.
+  4. Move to the countertop.
+  5. Place the hot plate on the countertop.
+
+### Example Code
+```python
+def solve_household_task(task_description):
+    # Parse the task description
+    game_id, room_description, task = task_description.split('\n')
+    
+    # Extract the object and target receptacle from the task
+    task_parts = task.split(' ')
+    object_to_find = task_parts[1]
+    target_receptacle = task_parts[-1]
+    
+    # List of receptacles in the room
+    receptacles = room_description.split(', ')
+    
+    # Function to move to a receptacle and check its contents
+    def go_to_receptacle(receptacle):
+        print(f"go to {receptacle}")
+        # Simulate moving to the receptacle
+        # Check if the receptacle is closed and open it if necessary
+        if "closed" in receptacle:
+            print(f"open {receptacle}")
+            # Simulate opening the receptacle
+        # Check the contents of the receptacle
+        contents = get_contents(receptacle)
+        return contents
+    
+    # Function to get the contents of a receptacle
+    def get_contents(receptacle):
+        # Simulate getting the contents of the receptacle
+        return [object_to_find]  # Example: return the object if found
+    
+    # Function to take an object from a receptacle
+    def take_object(receptacle, object_to_find):
+        print(f"take {object_to_find} from {receptacle}")
+        # Simulate taking the object
+        return object_to_find
+    
+    # Function to put an object in a receptacle
+    def put_object(receptacle, object_to_find):
+        print(f"put {object_to_find} in/on {receptacle}")
+        # Simulate putting the object in the receptacle
+    
+    # Function to use an object
+    def use_object(object_to_find):
+        print(f"use {object_to_find}")
+        # Simulate using the object
+    
+    # Main task-solving loop
+    for receptacle in receptacles:
+        contents = go_to_receptacle(receptacle)
+        if object_to_find in contents:
+            object_found = take_object(receptacle, object_to_find)
+            break
+    
+    # Move to the target receptacle and complete the task
+    go_to_receptacle(target_receptacle)
+    put_object(target_receptacle, object_found)
+    
+    # Verify the task is completed
+    print("Task completed successfully.")
+```
+
+### Note
+- **Customize the functions** `get_contents`, `take_object`, `put_object`, and `use_object` to interact with the ALFWorld environment.
+- **Ensure the task is completed within the step limit** to avoid failure due to `max_steps`.
+Iteration 1: New subsample score 1.0 is not better than old score 1.0, skipping
+Iteration 2: Selected program 0 score: 0.5833333333333334
+Iteration 2: Proposed new text for skill_md: ## solve_household_task
+Given an ALFWorld household task, this workflow finds the object, completes the necessary actions, and places the object in the target receptacle. The task involves navigating the environment, interacting with objects, and handling specific conditions such as closed receptacles and multiple objects.
+
+### Input Format
+- **ALFWorld game ID**: A unique identifier for the game environment.
+- **Room Description**: A list of objects and receptacles in the room.
+- **Task Description**: A clear and concise description of the task to be performed.
+
+### Task Description
+- **Objective**: Perform the specified action with the given object and place it in the target receptacle.
+- **Steps**:
+  1. **Navigate to the receptacle containing the object**.
+  2. **Open the receptacle if it is closed**.
+  3. **Take the object from the receptacle**.
+  4. **Navigate to the target receptacle**.
+  5. **Open the target receptacle if it is closed**.
+  6. **Place the object in the target receptacle**.
+
+### Domain-Specific Information
+- **Receptacles**: Objects like cabinets, drawers, countertops, and sidetables can contain other objects.
+- **Closed Receptacles**: Receptacles may be closed and need to be opened before interacting with their contents.
+- **Multiple Objects**: Some receptacles may contain multiple objects, and the assistant must correctly identify and interact with the target object.
+- **Action Constraints**: Some actions may fail if the object is not in the expected state (e.g., "put pencil in sidetable" may fail if the sidetable is closed).
+
+### Generalizable Strategy
+- **Systematic Search**: If the object is not found in the first receptacle, systematically search other receptacles.
+- **Verify Object State**: Ensure the object is in the correct state before performing actions (e.g., clean the lettuce before putting it in the fridge).
+- **Handle Failures**: If an action fails, re-evaluate the current state and try alternative actions (e.g., if "put pencil in sidetable" fails, try "put pencil on sidetable").
+
+### Example Task
+- **Task**: Clean some lettuce and put it in the fridge.
+- **Steps**:
+  1. **Navigate to the countertop or other likely receptacles**.
+  2. **Find the lettuce**.
+  3. **Take the lettuce**.
+  4. **Navigate to the sinkbasin**.
+  5. **Clean the lettuce**.
+  6. **Navigate to the fridge**.
+  7. **Open the fridge if it is closed**.
+  8. **Put the lettuce in the fridge**.
+
+- **Task**: Put two newspapers in the armchair.
+- **Steps**:
+  1. **Navigate to the sidetables or other likely receptacles**.
+  2. **Find the first newspaper**.
+  3. **Take the first newspaper**.
+  4. **Navigate to the armchair**.
+  5. **Put the first newspaper in the armchair**.
+  6. **Navigate to the sidetables or other likely receptacles**.
+  7. **Find the second newspaper**.
+  8. **Take the second newspaper**.
+  9. **Navigate to the armchair**.
+  10. **Put the second newspaper in the armchair**.
+
+- **Task**: Put a pencil in the sidetable.
+- **Steps**:
+  1. **Navigate to the dresser or other likely receptacles**.
+  2. **Find the pencil**.
+  3. **Take the pencil**.
+  4. **Navigate to the sidetable**.
+  5. **Open the sidetable if it is closed**.
+  6. **Put the pencil in the sidetable**.
+
+### Example Inputs
+- **ALFWorld game 198c8684**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+  - **Task**: Clean some lettuce and put it in the fridge.
+
+- **ALFWorld game 555e4898**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a armchair 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.
+  - **Task**: Put two newspapers in the armchair.
+
+- **ALFWorld game 46db287c**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 2, and a sidetable 1.
+  - **Task**: Put a pencil in the sidetable.
+Iteration 2: Accepted candidate (subsample score 1.0 -> 3.0); running full eval.
+Iteration 2: Found a better program on the valset with score 0.6666666666666666.
+Iteration 2: Valset score for new program: 0.6666666666666666 (coverage 12 / 12)
+Iteration 2: Val aggregate for new program: 0.6666666666666666
+Iteration 2: Individual valset scores for new program: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 0.0, 5: 0.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 0.0, 10: 1.0, 11: 0.0}
+Iteration 2: New valset pareto front scores: {0: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 4: 0.0, 5: 0.0, 6: 1.0, 7: 1.0, 8: 1.0, 9: 0.0, 10: 1.0, 11: 0.0}
+Iteration 2: Valset pareto front aggregate score: 0.6666666666666666
+Iteration 2: Updated valset pareto front programs: {0: {0, 1}, 1: {0, 1}, 2: {0, 1}, 3: {0, 1}, 4: {0, 1}, 5: {0, 1}, 6: {0, 1}, 7: {1}, 8: {0, 1}, 9: {0, 1}, 10: {0, 1}, 11: {0, 1}}
+Iteration 2: Best valset aggregate score so far: 0.6666666666666666
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.6666666666666666
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 1
+Iteration 3: Selected program 1 score: 0.6666666666666666
+Iteration 3: All subsample scores perfect for parent 1. Skipping.
+Iteration 3: Reflective mutation did not propose a new candidate
+Iteration 4: Selected program 1 score: 0.6666666666666666
+Iteration 4: Proposed new text for skill_md: ## solve_household_task
+Given an ALFWorld household task, this workflow finds the object, completes the necessary actions, and places the object in the target receptacle. The task involves navigating the environment, interacting with objects, and handling specific conditions such as closed receptacles and multiple objects.
+
+### Input Format
+- **ALFWorld game ID**: A unique identifier for the game environment.
+- **Room Description**: A list of objects and receptacles in the room.
+- **Task Description**: A clear and concise description of the task to be performed.
+
+### Task Description
+- **Objective**: Perform the specified action with the given object and place it in the target receptacle.
+- **Steps**:
+  1. **Navigate to the receptacle containing the object**.
+  2. **Open the receptacle if it is closed**.
+  3. **Take the object from the receptacle**.
+  4. **Navigate to the target receptacle**.
+  5. **Open the target receptacle if it is closed**.
+  6. **Place the object in the target receptacle**.
+
+### Domain-Specific Information
+- **Receptacles**: Objects like cabinets, drawers, countertops, and sidetables can contain other objects.
+- **Closed Receptacles**: Receptacles may be closed and need to be opened before interacting with their contents.
+- **Multiple Objects**: Some receptacles may contain multiple objects, and the assistant must correctly identify and interact with the target object.
+- **Action Constraints**: Some actions may fail if the object is not in the expected state (e.g., "put pencil in sidetable" may fail if the sidetable is closed).
+
+### Generalizable Strategy
+- **Systematic Search**: If the object is not found in the first receptacle, systematically search other receptacles.
+- **Verify Object State**: Ensure the object is in the correct state before performing actions (e.g., clean the lettuce before putting it in the fridge).
+- **Handle Failures**: If an action fails, re-evaluate the current state and try alternative actions (e.g., if "put pencil in sidetable" fails, try "put pencil on sidetable").
+
+### Example Task
+- **Task**: Clean some lettuce and put it in the fridge.
+- **Steps**:
+  1. **Navigate to the countertop or other likely receptacles**.
+  2. **Find the lettuce**.
+  3. **Take the lettuce**.
+  4. **Navigate to the sinkbasin**.
+  5. **Clean the lettuce**.
+  6. **Navigate to the fridge**.
+  7. **Open the fridge if it is closed**.
+  8. **Put the lettuce in the fridge**.
+
+- **Task**: Put two newspapers in the armchair.
+- **Steps**:
+  1. **Navigate to the sidetables or other likely receptacles**.
+  2. **Find the first newspaper**.
+  3. **Take the first newspaper**.
+  4. **Navigate to the armchair**.
+  5. **Put the first newspaper in the armchair**.
+  6. **Navigate to the sidetables or other likely receptacles**.
+  7. **Find the second newspaper**.
+  8. **Take the second newspaper**.
+  9. **Navigate to the armchair**.
+  10. **Put the second newspaper in the armchair**.
+
+- **Task**: Put a pencil in the sidetable.
+- **Steps**:
+  1. **Navigate to the dresser or other likely receptacles**.
+  2. **Find the pencil**.
+  3. **Take the pencil**.
+  4. **Navigate to the sidetable**.
+  5. **Open the sidetable if it is closed**.
+  6. **Put the pencil in the sidetable**.
+
+### Example Inputs
+- **ALFWorld game 198c8684**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+  - **Task**: Clean some lettuce and put it in the fridge.
+
+- **ALFWorld game 555e4898**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a armchair 1, a diningtable 1, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a shelf 1, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.
+  - **Task**: Put two newspapers in the armchair.
+
+- **ALFWorld game 46db287c**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a armchair 1, a bed 1, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 2, and a sidetable 1.
+  - **Task**: Put a pencil in the sidetable.
+
+### Additional Notes
+- **Handling Failures**: If an action fails, the assistant should re-evaluate the current state and try alternative actions. For example, if "put pencil in sidetable" fails, the assistant should check if the sidetable is closed and open it before trying again.
+- **Systematic Search**: If the object is not found in the first receptacle, the assistant should systematically search other likely receptacles. For example, if a pencil is not found in the dresser, the assistant should check other drawers and cabinets.
+- **Verify Object State**: Ensure the object is in the correct state before performing actions. For example, if the task is to clean an apple and put it in the diningtable, the assistant should first clean the apple before moving it to the diningtable.
+- **Max Steps**: If the task fails due to reaching the maximum number of steps, the assistant should try to optimize the path and actions to complete the task within the allowed steps.
+Iteration 4: New subsample score 2.0 is not better than old score 2.0, skipping
+Iteration 5: Selected program 1 score: 0.6666666666666666
+Iteration 5: All subsample scores perfect for parent 1. Skipping.
+Iteration 5: Reflective mutation did not propose a new candidate
+Iteration 6: Selected program 1 score: 0.6666666666666666
+Iteration 6: Proposed new text for skill_md: ## solve_household_task
+Given an ALFWorld household task, this workflow finds the object, completes the necessary actions, and places the object in the target receptacle. The task involves navigating the environment, interacting with objects, and handling specific conditions such as closed receptacles and multiple objects.
+
+### Input Format
+- **ALFWorld game ID**: A unique identifier for the game environment.
+- **Room Description**: A list of objects and receptacles in the room.
+- **Task Description**: A clear and concise description of the task to be performed.
+
+### Task Description
+- **Objective**: Perform the specified action with the given object and place it in the target receptacle.
+- **Steps**:
+  1. **Navigate to the receptacle containing the object**.
+  2. **Open the receptacle if it is closed**.
+  3. **Take the object from the receptacle**.
+  4. **Navigate to the target receptacle**.
+  5. **Open the target receptacle if it is closed**.
+  6. **Place the object in the target receptacle**.
+
+### Domain-Specific Information
+- **Receptacles**: Objects like cabinets, drawers, countertops, and sidetables can contain other objects.
+- **Closed Receptacles**: Receptacles may be closed and need to be opened before interacting with their contents.
+- **Multiple Objects**: Some receptacles may contain multiple objects, and the assistant must correctly identify and interact with the target object.
+- **Action Constraints**: Some actions may fail if the object is not in the expected state (e.g., "put pencil in sidetable" may fail if the sidetable is closed).
+
+### Generalizable Strategy
+- **Systematic Search**: If the object is not found in the first receptacle, systematically search other receptacles.
+- **Verify Object State**: Ensure the object is in the correct state before performing actions (e.g., clean the lettuce before putting it in the fridge).
+- **Handle Failures**: If an action fails, re-evaluate the current state and try alternative actions (e.g., if "put pencil in sidetable" fails, try "put pencil on sidetable").
+
+### Example Task
+- **Task**: Clean some lettuce and put it in the fridge.
+- **Steps**:
+  1. **Navigate to the countertop or other likely receptacles**.
+  2. **Find the lettuce**.
+  3. **Take the lettuce**.
+  4. **Navigate to the sinkbasin**.
+  5. **Clean the lettuce**.
+  6. **Navigate to the fridge**.
+  7. **Open the fridge if it is closed**.
+  8. **Put the lettuce in the fridge**.
+
+- **Task**: Put two newspapers in the armchair.
+- **Steps**:
+  1. **Navigate to the sidetables or other likely receptacles**.
+  2. **Find the first newspaper**.
+  3. **Take the first newspaper**.
+  4. **Navigate to the armchair**.
+  5. **Put the first newspaper in the armchair**.
+  6. **Navigate to the sidetables or other likely receptacles**.
+  7. **Find the second newspaper**.
+  8. **Take the second newspaper**.
+  9. **Navigate to the armchair**.
+  10. **Put the second newspaper in the armchair**.
+
+- **Task**: Put a pencil in the sidetable.
+- **Steps**:
+  1. **Navigate to the dresser or other likely receptacles**.
+  2. **Find the pencil**.
+  3. **Take the pencil**.
+  4. **Navigate to the sidetable**.
+  5. **Open the sidetable if it is closed**.
+  6. **Put the pencil in the sidetable**.
+
+### Example Inputs
+- **ALFWorld game 83f0f02c**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a shelf 3, a shelf 2, a shelf 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+  - **Task**: Put a cool pot in cabinet.
+
+- **ALFWorld game 198c8684**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a cabinet 26, a cabinet 25, a cabinet 24, a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabinet 2, a cabinet 1, a coffeemachine 1, a countertop 3, a countertop 2, a countertop 1, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a fridge 1, a garbagecan 1, a microwave 1, a sinkbasin 1, a stoveburner 4, a stoveburner 3, a stoveburner 2, a stoveburner 1, and a toaster 1.
+  - **Task**: Clean some lettuce and put it in the fridge.
+
+- **ALFWorld game 76d1392b**
+  - **Room Description**: You are in the middle of a room. Looking quickly around you, you see a armchair 1, a cabinet 1, a drawer 21, a drawer 20, a drawer 19, a drawer 18, a drawer 17, a drawer 16, a drawer 15, a drawer 14, a drawer 13, a drawer 12, a drawer 11, a drawer 10, a drawer 9, a drawer 8, a drawer 7, a drawer 6, a drawer 5, a drawer 4, a drawer 3, a drawer 2, a drawer 1, a dresser 1, a garbagecan 1, a sidetable 5, a sidetable 4, a sidetable 3, a sidetable 2, a sidetable 1, and a sofa 1.
+  - **Task**: Examine the box with the desklamp.
+
+### Additional Notes
+- **Handling Failures**: If an action fails, the assistant should re-evaluate the current state and try alternative actions. For example, if "put pencil in sidetable" fails, try "put pencil on sidetable".
+- **Systematic Search**: If the object is not found in the first receptacle, systematically search other receptacles. Ensure to check all possible locations before concluding that the object is not present.
+- **Object State Verification**: Before performing actions, ensure the object is in the correct state. For example, clean the lettuce before putting it in the fridge.
+- **Receptacle Handling**: Always check if a receptacle is closed before attempting to interact with its contents. Open the receptacle if necessary.
+- **Max Steps**: Be mindful of the maximum number of steps allowed. If the task is not completed within the allowed steps, re-evaluate the strategy and try a different approach.
