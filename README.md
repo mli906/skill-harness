@@ -11,6 +11,8 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m pytest -q                                              # exit test
 ```
 
+**Reproducible install / moving to a new machine:** see `TRANSFER.md` (`./bootstrap.sh`, `make smoke`), `requirements.lock` (exact pins, Python 3.13), `CONFIG.md` (env vars), `PORTABILITY.md`.
+
 ## Models
 * `base_model: stub` – deterministic, seeded offline model (used by the exit test). It simulates category-dependent errors, benefits from `PROCEDURE[...]` skills, and on some seeds the learner over-generalises a harmful `ANSWER IN UPPERCASE` rule, so skills can help *or* hurt.
 * any other name (e.g. `gpt-4o-mini`) – **OpenAI is the default real backend**: `OPENAI_API_KEY` (optional `OPENAI_BASE_URL` for compatible servers). Every call is pinned to `base_model`, temperature 0, with a derived seed.

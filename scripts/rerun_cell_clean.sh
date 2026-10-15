@@ -10,7 +10,7 @@ OUT=logs/scale_clean; LOG=$OUT/$NAME.rerun.out; mkdir -p $OUT
 export PYTHONPATH=. SCALE_MANIFEST=manifests/alfworld_scale_clean SCALE_OUT=$OUT SCALE_BUDGET_USD=9.3
 export HARNESS_EMBEDDING=openai:text-embedding-3-small AWM_SUCCESS_ONLY=1
 export EVOSKILL_FROZEN_PROJECT=logs/evoskill_alf/seed0_1791869166_c0dbb6101bf8f7c4 TRACE2SKILL_REUSE=1
-PY=${PY:-/workspace/skill-harness/.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-9.4}; PGID=$(ps -o pgid= $$ | tr -d ' ')
+PY=${PY:-.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-9.4}; PGID=$(ps -o pgid= $$ | tr -d ' ')
 usage() { python3 -c "
 import json,os,urllib.request
 r=urllib.request.Request('https://openrouter.ai/api/v1/key',headers={'Authorization':'Bearer '+os.environ['OPENROUTER_API_KEY']})

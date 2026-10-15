@@ -69,7 +69,7 @@ def checkout() -> Path:
 
 
 def skill_creator() -> Path:
-    root = Path.home() / ".cache" / "skill-harness" / "anthropic-skills" / SKILL_CREATOR_SHA
+    root = Path(os.environ.get("HARNESS_CACHE", Path.home() / ".cache" / "skill-harness")) / "anthropic-skills" / SKILL_CREATOR_SHA
     if not (root / ".git").exists():
         root.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["git", "clone", "-q", SKILL_CREATOR_REPO, str(root)], check=True)

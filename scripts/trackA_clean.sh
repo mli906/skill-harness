@@ -12,7 +12,7 @@ export PYTHONPATH=. SCALE_MANIFEST=manifests/alfworld_scale_clean SCALE_OUT=$OUT
 export HARNESS_EMBEDDING=openai:text-embedding-3-small AWM_SUCCESS_ONLY=1
 export EVOSKILL_MODEL=openai/gpt-4o EVOSKILL_ITERATIONS=1 EVOSKILL_FRONTIER=2 EVOSKILL_EXPORT=frontier_union EVOSKILL_REUSE=1
 export EVOSKILL_FROZEN_PROJECT=logs/evoskill_alf/seed0_1791869166_c0dbb6101bf8f7c4 TRACE2SKILL_REUSE=1
-PY=${PY:-/workspace/skill-harness/.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-9.4}; PGID=$(ps -o pgid= $$ | tr -d ' ')
+PY=${PY:-.venv/bin/python}; HARDSTOP_USD=${HARDSTOP_USD:-9.4}; PGID=$(ps -o pgid= $$ | tr -d ' ')
 echo "$(date) start pid=$$ pgid=$PGID; waiting for live run" >> $LOG
 while pgrep -f "python.* scripts/scale_run.py cell|bash .*scripts/scale_(rerun_openai|finalize)\.sh" >/dev/null; do sleep 60; done
 usage() { python3 -c "
@@ -38,9 +38,10 @@ cell A_noskill_noop noskill noop skill_md 3 Q $QC
 wait $(jobs -p | grep -v "^$WD$")
 echo "$(date) cells finished; usage $(usage)" >> $LOG
 $PY scripts/scale_report.py >> $LOG 2>&1
-( cd /workspace/skill-harness-analysis && PYTHONPATH=/workspace/.analysis-pkgs:. $PY -m harness.analysis \
-    --runs /workspace/skill-harness-leak/$OUT --out /workspace/analysis-out/trackA_clean ) >> $LOG 2>&1
+$PY -m harness.analysis --runs $OUT --out ${ANALYSIS_OUT:-analysis-out/trackA_clean} >> $LOG 2>&1
+if [ "${TRACKA_AUTOCOMMIT:-1}" = 1 ]; then   # default preserves old behavior; set TRACKA_AUTOCOMMIT=0 on a new platform (this commits+pushes feat/leak-invariants)
 git add $SCALE_MANIFEST >> $LOG 2>&1
 git -c user.name=mli906 -c user.email=mli906@users.noreply.github.com commit -m "Track A re-run on clean split: RESULTS.md + run_manifest.json" >> $LOG 2>&1
 git push origin feat/leak-invariants >> $LOG 2>&1
+fi
 kill $WD 2>/dev/null; echo "$(date) TRACKA_DONE" >> $LOG
