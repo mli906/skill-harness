@@ -56,7 +56,8 @@ import importlib.metadata as m, sys
 want = {"agentdojo": "0.1.35", "gepa": "0.1.4", "alfworld": "0.4.2", "textworld": "1.7.0", "numpy": "2.3.5", "scipy": "1.18.1", "matplotlib": "3.11.2"}
 bad = {k: m.version(k) for k, v in want.items() if m.version(k) != v}
 assert not bad, bad
-import harness, gepa, agentdojo, textworld, alfworld, scipy, numpy, yaml, openai, evoskill  # noqa
+import harness, gepa, agentdojo, textworld, alfworld, scipy, numpy, yaml, openai  # noqa
+m.version("evoskill"); import src.registry  # noqa  (evoskill dist installs the top-level package `src`)
 print("key pins verified:", ", ".join(f"{k}=={v}" for k, v in want.items()))
 PY
 
