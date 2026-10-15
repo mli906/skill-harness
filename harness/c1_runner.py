@@ -11,6 +11,8 @@ and are not guarded (they run their own rollouts).
 """
 from __future__ import annotations
 import os
+from harness.provenance import audit_states
+from harness.splits import check_frozen_origin, is_auditable
 import time
 from harness import registry, corpus
 from harness.context import Context
@@ -35,11 +37,13 @@ def run_c1(cfg: RunConfig, corpus_dir: str, log_path: str | None = None) -> Scor
     train, test = bench.train_tasks(), bench.test_tasks()
     ctx.task_lookup.update({task_id(t): t for t in train + test})
     learner = registry.build("learner", cfg.learner, ctx)
+    ctx.learner = learner
     gate = registry.build("gate", cfg.gate, ctx)
     agent, rep, k = ctx.agent, ctx.representation, cfg.retrieval_k
     empty = SkillLibrary(skills=[])
 
     learn_tasks, probe_tasks = _split_probe(bench, train, cfg.seed)
+    check_frozen_origin(learner, {task_id(t) for t in probe_tasks}, {task_id(t) for t in test}, cfg.learner)
     checks = corpus.validate(corpus_dir, train, probe_tasks, test)
     recs, manifest = corpus.load(corpus_dir)
     if not checks["all_ok"]:
@@ -64,8 +68,9 @@ def run_c1(cfg: RunConfig, corpus_dir: str, log_path: str | None = None) -> Scor
                    output=t_lib.final_output, failure_mode=t_lib.failure_mode, steps=len(t_lib.steps))
     learner_ids = {t.task_id for t in learn_traces}
     heldout_ids = {task_id(t) for t in probe_tasks + test}
-    audited = [s for s in lib.skills if s.provenance
-               and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
+    audited = [s for s in lib.skills if is_auditable(s, learner_ids, heldout_ids)]
+    logger.log("audit", **audit_states(lib.skills, learner_ids, heldout_ids,
+                                        getattr(learner, "external_provenance", None)))
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),

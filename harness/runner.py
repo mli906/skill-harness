@@ -1,6 +1,7 @@
 """run(cfg) -> Scorecard: the only thing a run invokes."""
 from __future__ import annotations
 import os
+from harness.provenance import audit_states
 import time
 from collections import defaultdict
 from harness import registry
@@ -8,6 +9,7 @@ from harness.context import Context
 from harness.llm import make_client, make_embedder
 from harness.logging_utils import JsonlLogger
 from harness.seeding import rng, task_id
+from harness.splits import carve_valset, check_disjoint, guard_tasks, is_auditable, check_frozen_origin
 from harness.types import RunConfig, Scorecard, SkillLibrary, Trace
 
 PROBE_PER_CATEGORY = 2
@@ -45,15 +47,30 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     train, test = ctx.benchmark.train_tasks(), ctx.benchmark.test_tasks()
     ctx.task_lookup.update({task_id(t): t for t in train + test})
     learner = registry.build("learner", cfg.learner, ctx)
+    ctx.learner = learner
     gate = registry.build("gate", cfg.gate, ctx)
     agent, rep, k = ctx.agent, ctx.representation, cfg.retrieval_k
     empty = SkillLibrary(skills=[])
 
     # 1. collect training traces with empty library
     learn_tasks, probe_tasks = _split_probe(ctx.benchmark, train, cfg.seed)
+    # Opt-in third slice: only learners with uses_valset=True get a gepa_valset (else empty, and
+    # learn_tasks is unchanged -> non-GEPA runs are byte-identical to the two-way split).
+    valset_tasks = []
+    if getattr(learner, "uses_valset", False):
+        learn_tasks, valset_tasks = carve_valset(ctx.benchmark, learn_tasks, cfg.seed)
+    check_disjoint(learn_corpus=learn_tasks, gepa_valset=valset_tasks, gate_probe=probe_tasks, test=test)
+    probe_ids = {task_id(t) for t in probe_tasks}
+    check_frozen_origin(learner, probe_ids, {task_id(t) for t in test}, cfg.learner)
+    if hasattr(learner, "bind_split"):
+        learner.bind_split(train=learn_tasks, valset=valset_tasks, forbidden_ids=probe_ids)
+    guard_tasks(getattr(learner, "internal_valset", None) or [], probe_ids, f"learner {cfg.learner}")
     learn_traces = _eval(agent, rep, k, learn_tasks, empty)
     probe_traces = _eval(agent, rep, k, probe_tasks, empty)
-    logger.log("split", learn_tasks=learn_tasks, probe_tasks=probe_tasks, test_tasks=test)
+    if valset_tasks:
+        logger.log("split", learn_tasks=learn_tasks, gepa_valset=valset_tasks, probe_tasks=probe_tasks, test_tasks=test)
+    else:
+        logger.log("split", learn_tasks=learn_tasks, probe_tasks=probe_tasks, test_tasks=test)
     logger.log("train.traces", n_learn=len(learn_traces), n_probe=len(probe_traces),
                learn_pass=sum(t.outcome for t in learn_traces), probe_pass=sum(t.outcome for t in probe_traces))
     # 2. learner.induce(traces) -> candidates
@@ -72,10 +89,15 @@ def run(cfg: RunConfig, log_path: str | None = None) -> Scorecard:
     # 6. assemble Scorecard
     # Auditable = non-empty provenance, every id is a train trace the learner actually
     # saw, and none leak from the held-out probe or the test set.
-    learner_ids = {t.task_id for t in learn_traces}
+    # gepa_valset is a training-side slice the learner legitimately optimised on.
+    learner_ids = {t.task_id for t in learn_traces} | {task_id(t) for t in valset_tasks}
     heldout_ids = {task_id(t) for t in probe_tasks + test}
-    audited = [s for s in lib.skills if s.provenance
-               and set(s.provenance) <= learner_ids and not set(s.provenance) & heldout_ids]
+    # Scorecard.auditability stays LOCAL (is_auditable; canonical semantics, M0 unchanged). The
+    # three-state audit event records auditable / external / unauditable; auditable OR external
+    # passes (traceable), unauditable (held-out overlap, placeholder, empty, mixed) fails.
+    audited = [s for s in lib.skills if is_auditable(s, learner_ids, heldout_ids)]
+    logger.log("audit", **audit_states(lib.skills, learner_ids, heldout_ids,
+                                        getattr(learner, "external_provenance", None)))
     sc = Scorecard(
         success_rate=sum(t.outcome for t in ev) / len(ev),
         avg_steps=sum(len(t.steps) for t in ev) / len(ev),

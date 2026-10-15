@@ -19,7 +19,8 @@ Mapping
 Env knobs: EVOSKILL_ITERATIONS (2), EVOSKILL_CONCURRENCY (2),
 EVOSKILL_FRONTIER (2), EVOSKILL_FAILURE_SAMPLES (2), EVOSKILL_TRAIN_RATIO (0.5),
 EVOSKILL_VAL_RATIO (0.5), EVOSKILL_HARNESS (openhands), EVOSKILL_MODEL
-(default "openai/<cfg.base_model>"), EVOSKILL_TIMEOUT (600), EVOSKILL_WORKDIR.
+(default "openai/<cfg.base_model>"; "openrouter/openai/gpt-4o" routes via OpenRouter
+through litellm, $BUILD_BASE_URL via build_routing), EVOSKILL_TIMEOUT (600), EVOSKILL_WORKDIR.
 """
 from __future__ import annotations
 import csv
@@ -108,6 +109,15 @@ val_ratio = {_env('EVOSKILL_VAL_RATIO', 0.5)}
     return root
 
 
+def _config_model(root: Path) -> str:
+    """[harness].model from the project's config.toml (what EvoSkill will actually call)."""
+    import tomllib
+    try:
+        return tomllib.loads((root / ".evoskill" / "config.toml").read_text())["harness"]["model"]
+    except Exception:
+        return os.environ.get("EVOSKILL_MODEL", "")
+
+
 def run_evoskill(root: Path, log_file: Path) -> int:
     """Invoke EvoSkill's own CLI, unchanged."""
     # Launch via the compat shim (patches OpenAI strict-schema issue in-process,
@@ -115,7 +125,9 @@ def run_evoskill(root: Path, log_file: Path) -> int:
     cmd = [sys.executable, "-m", "harness.learners.evoskill_compat", "run", "--quiet",
            "--config", str(root / ".evoskill" / "config.toml")]
     repo = str(Path(__file__).resolve().parents[2])
-    env = dict(os.environ, EVOSKILL_REMOTE="1",  # force local execution
+    from harness.learners.build_routing import evoskill_model_env
+    _, base_env = evoskill_model_env(_config_model(root))
+    env = dict(base_env, EVOSKILL_REMOTE="1",  # force local execution
                PYTHONPATH=repo + os.pathsep + os.environ.get("PYTHONPATH", ""))
     with open(log_file, "w") as lf:
         return subprocess.run(cmd, cwd=root, env=env, stdout=lf, stderr=subprocess.STDOUT).returncode
@@ -249,7 +261,8 @@ class EvoSkillLearner(Learner):
 
     def induce(self, traces: list[Trace], current: SkillLibrary) -> list[Skill]:
         rows = self.traces_to_rows(traces)
-        model = os.environ.get("EVOSKILL_MODEL", f"openai/{self.base_model}")
+        model = os.environ.get("EVOSKILL_MODEL") or (self.base_model if self.base_model.startswith("openrouter/")
+                                                     else f"openai/{self.base_model}")
         key = _cache_key(rows, model)
         # EVOSKILL_REUSE=1: reuse a finished EvoSkill project with identical input
         # rows + model + EVOSKILL_* settings (e.g. both gates share one induction).
